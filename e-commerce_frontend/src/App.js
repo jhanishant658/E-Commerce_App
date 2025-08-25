@@ -1,11 +1,14 @@
 import './App.css';
 import Navigation from './Customer/Components/Navigation/Navigation';
+import HomePage from './Customer/Pages/HomePage';
 
 function App() {
   return (
-   <h1 className="text-3xl font-bold underline text-center">
+  <div>
       <Navigation />
-    </h1>
+      <HomePage />
+   </div>
+   
   );
 }
 
