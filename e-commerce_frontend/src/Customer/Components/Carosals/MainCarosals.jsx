@@ -2,7 +2,7 @@ import React from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { MainCarosalData } from './MainCarosalData';
-import HomeSectionCarsoal from '../HomeSectionCarosals/HomeSectionCarsoal';
+
 
 
 const items = MainCarosalData.map((item) => (
@@ -34,9 +34,7 @@ export default function MainCarosals() {
   />
 
 </div>
-   <div className=''>
-      <HomeSectionCarsoal />
-   </div>
+   
 </>
   )
 }

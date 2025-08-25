@@ -71,7 +71,7 @@ const products = [
   },
 ];
 
-export default function HomeSectionCarousel() {
+export default function HomeSectionCarousel({sectionName}) {
   const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -91,7 +91,7 @@ export default function HomeSectionCarousel() {
   return (
     <div className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-20">
       <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-        Customers also purchased
+       { sectionName|| 'Customers also purchased'}
       </h2>
 
       <AliceCarousel
