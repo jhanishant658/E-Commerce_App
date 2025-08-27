@@ -1,6 +1,8 @@
 'use client'
-
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, useState } from 'react'
+import { Link, Links } from 'react-router-dom'
 import {
   Dialog,
   DialogBackdrop,
@@ -194,10 +196,10 @@ export default function Navigation() {
                             src={item.imageSrc}
                             className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
                           />
-                          <a href={item.href} className="mt-6 block font-medium text-gray-900">
+                          <Link href={item.href} className="mt-6 block font-medium text-gray-900">
                             <span aria-hidden="true" className="absolute inset-0 z-10" />
                             {item.name}
-                          </a>
+                          </Link>
                           <p aria-hidden="true" className="mt-1">
                             Shop now
                           </p>
@@ -216,9 +218,9 @@ export default function Navigation() {
                         >
                           {section.items.map((item) => (
                             <li key={item.name} className="flow-root">
-                              <a href={item.href} className="-m-2 block p-2 text-gray-500">
+                              <Link href={item.href} className="-m-2 block p-2 text-gray-500">
                                 {item.name}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -232,28 +234,28 @@ export default function Navigation() {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
-                  <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
+                  <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
                     {page.name}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>
 
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                  Sign in
-                </a>
+                <Link href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                  sign up
+                </Link>
               </div>
               <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                <Link href="#" className="-m-2 block p-2 font-medium text-gray-900">
                   Create account
-                </a>
+                </Link>
               </div>
             </div>
 
             <div className="border-t border-gray-200 px-4 py-6">
-              <a href="#" className="-m-2 flex items-center p-2">
+              <Link href="#" className="-m-2 flex items-center p-2">
                 <img
                   alt=""
                   src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
@@ -261,7 +263,7 @@ export default function Navigation() {
                 />
                 <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
                 <span className="sr-only">, change currency</span>
-              </a>
+              </Link>
             </div>
           </DialogPanel>
         </div>
@@ -287,14 +289,14 @@ export default function Navigation() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <Link href="#">
                   <span className="sr-only">Your Company</span>
                   <img
                     alt=""
                     src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                     className="h-8 w-auto"
                   />
-                </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -328,10 +330,10 @@ export default function Navigation() {
                                       src={item.imageSrc}
                                       className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
                                     />
-                                    <a href={item.href} className="mt-6 block font-medium text-gray-900">
+                                    <Link href={item.href} className="mt-6 block font-medium text-gray-900">
                                       <span aria-hidden="true" className="absolute inset-0 z-10" />
                                       {item.name}
-                                    </a>
+                                    </Link>
                                     <p aria-hidden="true" className="mt-1">
                                       Shop now
                                     </p>
@@ -351,9 +353,9 @@ export default function Navigation() {
                                     >
                                       {section.items.map((item) => (
                                         <li key={item.name} className="flex">
-                                          <a href={item.href} className="hover:text-gray-800">
+                                          <Link href={item.href} className="hover:text-gray-800">
                                             {item.name}
-                                          </a>
+                                          </Link>
                                         </li>
                                       ))}
                                     </ul>
@@ -367,30 +369,76 @@ export default function Navigation() {
                     </Popover>
                   ))}
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
                       key={page.name}
                       href={page.href}
                       className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </PopoverGroup>
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Sign in
-                  </a>
+                  <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                    <Menu as="div" className="relative inline-block">
+      <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring-1 inset-ring-gray-300 hover:bg-gray-50">
+        Profile
+        <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+      </MenuButton>
+
+      <MenuItems
+        transition
+        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg outline-1 outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+      >
+        <div className="py-1">
+          <MenuItem>
+            <Link
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+            >
+              Account settings
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+            >
+              Support
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to ="/signin"
+              className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+            >
+              Sign in
+            </Link>
+          </MenuItem>
+          <form action="#" method="POST">
+            <MenuItem>
+              <button
+                type="submit"
+                className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+              >
+                Sign out
+              </button>
+            </MenuItem>
+          </form>
+        </div>
+      </MenuItems>
+    </Menu>
+                  </Link>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Create account
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
+                  <Link href="#" className="flex items-center text-gray-700 hover:text-gray-800">
                     <img
                       alt=""
                       src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
@@ -398,27 +446,27 @@ export default function Navigation() {
                     />
                     <span className="ml-3 block text-sm font-medium">CAD</span>
                     <span className="sr-only">, change currency</span>
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                  <Link href="#" className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Link href="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -1,11 +1,9 @@
-import React, { useRef, useState } from 'react';
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
-import HomeSectionCard from '../HomeSectionCards/HomeSectionCard';
-import { Button } from '@mui/material';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+'use client'
+
+import HomeSectionCard from "../HomeSectionCards/HomeSectionCard"
 
 const products = [
+
   {
     id: 1,
      product_type:'t-shirt',
@@ -92,7 +90,7 @@ const products = [
   },
   {
     id: 8,
-    product_type:'t-shirt',
+     product_type:'t-shirt',
     name: 'Focus Carry Pouch',
     href: '#',
     price: '$32',
@@ -102,83 +100,23 @@ const products = [
     Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
     rating: 4,
   },
-];
 
-export default function HomeSectionCarousel({sectionName}) {
-  const carouselRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+]
 
-  const slidePrev = () => carouselRef.current?.slidePrev();
-  const slideNext = () => carouselRef.current?.slideNext();
 
-  const responsive = {
-    0: { items: 1 },
-    600: { items: 2 },
-    1024: { items: 4 },
-  };
-
-  const items = products.map((product) => (
-    <HomeSectionCard key={product.id} product={product} />
-  ));
-
+export default function ProductList() {
   return (
-    <div className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-20">
-      <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-       { sectionName|| 'Customers also purchased'}
-      </h2>
+    <div className="bg-white">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 className="sr-only">Products</h2>
 
-      <AliceCarousel
-        ref={carouselRef}
-        mouseTracking
-        items={items}
-        responsive={responsive}
-        disableButtonsControls
-        disableDotsControls
-        activeIndex={activeIndex}
-        onSlideChanged={(e) => setActiveIndex(e.item)}
-      />
-
-      {/* Left Button */}
-      {activeIndex > 0 && (
-        <Button
-          variant="contained"
-          onClick={slidePrev}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '0.5rem',
-            transform: 'translateY(-50%) rotate(90deg)',
-            zIndex: 10,
-            backgroundColor: '#f1f5f9', // light gray background
-            color: '#000', // black arrow color
-            boxShadow: '0px 2px 6px rgba(0,0,0,0.2)',
-          }}
-          aria-label="Previous"
-        >
-          <KeyboardDoubleArrowLeftIcon style={{ transform: 'rotate(-90deg)' }} />
-        </Button>
-      )}
-
-      {/* Right Button */}
-      {activeIndex < products.length - 4 && (
-        <Button
-          variant="contained"
-          onClick={slideNext}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            right: '0.5rem',
-            transform: 'translateY(-50%) rotate(-90deg)',
-            zIndex: 10,
-            backgroundColor: '#f1f5f9',
-            color: '#000',
-            boxShadow: '0px 2px 6px rgba(0,0,0,0.2)',
-          }}
-          aria-label="Next"
-        >
-          <KeyboardDoubleArrowLeftIcon style={{ transform: 'rotate(-90deg)' }} />
-        </Button>
-      )}
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          {products.map((product) => (
+            
+            <HomeSectionCard key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
     </div>
-  );
+  )
 }

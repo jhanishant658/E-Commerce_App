@@ -2,11 +2,14 @@ import React from 'react'
 import MainCarosals from '../Components/Carosals/MainCarosals'
 import HomeSectionCarosal from '../Components/HomeSectionCarosals/HomeSectionCarsoal'
 import Footer from '../Components/Footer/Footer'
+import Navigation from '../Components/Navigation/Navigation'
 
 const HomePage = () => {
   return (
     <>
+      <Navigation/>
     <div className='MainCarosals mt-5 '>
+    
        <MainCarosals />
       
        
