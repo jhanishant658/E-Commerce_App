@@ -2,7 +2,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, useState } from 'react'
-import { Link, Links } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   Dialog,
   DialogBackdrop,
@@ -18,6 +18,7 @@ import {
   TabPanels,
 } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Cart from '../Cart/Cart'
 
 const navigation = {
   categories: [
@@ -27,13 +28,13 @@ const navigation = {
       featured: [
         {
           name: 'New Arrivals',
-          href: '#',
+          href: '/category',
           imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg',
           imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
         {
           name: 'Basic Tees',
-          href: '#',
+          href: '/category',
           imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg',
           imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
@@ -43,18 +44,18 @@ const navigation = {
           id: 'clothing',
           name: 'Clothing',
           items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'Tops', href: '/category' },
+            { name: 'Dresses', href: '/category' },
+            { name: 'Pants', href: '/category' },
+            { name: 'Denim', href: '/category' },
+            { name: 'Sweaters', href: '/category' },
+            { name: 'T-Shirts', href: '/category' },
+            { name: 'Jackets', href: '/category' },
+            { name: 'Activewear', href: '/category' },
+            { name: 'Browse All', href: '/category' },
           ],
         },
-        {
+          {
           id: 'accessories',
           name: 'Accessories',
           items: [
@@ -66,7 +67,7 @@ const navigation = {
             { name: 'Belts', href: '#' },
           ],
         },
-        {
+         {
           id: 'brands',
           name: 'Brands',
           items: [
@@ -85,14 +86,14 @@ const navigation = {
       featured: [
         {
           name: 'New Arrivals',
-          href: '#',
+          href: '/category',
           imageSrc:
             'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
           imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
         },
         {
           name: 'Artwork Tees',
-          href: '#',
+          href: '/category',
           imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg',
           imageAlt:
             'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
@@ -103,13 +104,13 @@ const navigation = {
           id: 'clothing',
           name: 'Clothing',
           items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'Tops', href: '/category' },
+            { name: 'Pants', href: '/category' },
+            { name: 'Sweaters', href: '/category' },
+            { name: 'T-Shirts', href: '/category' },
+            { name: 'Jackets', href: '/category' },
+            { name: 'Activewear', href: '/category' },
+            { name: 'Browse All', href: '/category' },
           ],
         },
         {
@@ -138,8 +139,8 @@ const navigation = {
     },
   ],
   pages: [
-    { name: 'Company', href: '#' },
-    { name: 'Stores', href: '#' },
+    { name: 'Company', href: '/company' },
+    { name: 'Stores', href: '/stores' },
   ],
 }
 
@@ -150,28 +151,20 @@ export default function Navigation() {
     <div className="bg-white">
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
-        <DialogBackdrop
-          transition
-          className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-closed:opacity-0"
-        />
+        <DialogBackdrop className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear" />
         <div className="fixed inset-0 z-40 flex">
-          <DialogPanel
-            transition
-            className="relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out data-closed:-translate-x-full"
-          >
+          <DialogPanel className="relative flex w-full max-w-xs transform flex-col overflow-y-auto bg-white pb-12 shadow-xl transition duration-300 ease-in-out">
             <div className="flex px-4 pt-5 pb-2">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
               >
-                <span className="absolute -inset-0.5" />
-                <span className="sr-only">Close menu</span>
                 <XMarkIcon aria-hidden="true" className="size-6" />
               </button>
             </div>
 
-            {/* Links */}
+            {/* Mobile menu tabs */}
             <TabGroup className="mt-2">
               <div className="border-b border-gray-200">
                 <TabList className="-mb-px flex space-x-8 px-4">
@@ -196,29 +189,19 @@ export default function Navigation() {
                             src={item.imageSrc}
                             className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
                           />
-                          <Link href={item.href} className="mt-6 block font-medium text-gray-900">
-                            <span aria-hidden="true" className="absolute inset-0 z-10" />
+                          <Link to={`/category?type=${item.name}`} className="mt-6 block font-medium text-gray-900">
                             {item.name}
                           </Link>
-                          <p aria-hidden="true" className="mt-1">
-                            Shop now
-                          </p>
                         </div>
                       ))}
                     </div>
                     {category.sections.map((section) => (
                       <div key={section.name}>
-                        <p id={`${category.id}-${section.id}-heading-mobile`} className="font-medium text-gray-900">
-                          {section.name}
-                        </p>
-                        <ul
-                          role="list"
-                          aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                          className="mt-6 flex flex-col space-y-6"
-                        >
+                        <p className="font-medium text-gray-900">{section.name}</p>
+                        <ul className="mt-6 flex flex-col space-y-6">
                           {section.items.map((item) => (
                             <li key={item.name} className="flow-root">
-                              <Link href={item.href} className="-m-2 block p-2 text-gray-500">
+                              <Link to={`/category?type=${item.name}`} className="-m-2 block p-2 text-gray-500">
                                 {item.name}
                               </Link>
                             </li>
@@ -231,94 +214,67 @@ export default function Navigation() {
               </TabPanels>
             </TabGroup>
 
+            {/* Pages */}
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
-                  <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
+                  <Link to={page.href} className="-m-2 block p-2 font-medium text-gray-900">
                     {page.name}
                   </Link>
                 </div>
               ))}
             </div>
 
+            {/* Account */}
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               <div className="flow-root">
-                <Link href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                  sign up
-                </Link>
-              </div>
-              <div className="flow-root">
-                <Link href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                <Link to="/signup" className="-m-2 block p-2 font-medium text-gray-900">
                   Create account
                 </Link>
               </div>
-            </div>
-
-            <div className="border-t border-gray-200 px-4 py-6">
-              <Link href="#" className="-m-2 flex items-center p-2">
-                <img
-                  alt=""
-                  src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                  className="block h-auto w-5 shrink-0"
-                />
-                <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
-                <span className="sr-only">, change currency</span>
-              </Link>
             </div>
           </DialogPanel>
         </div>
       </Dialog>
 
+      {/* Desktop header */}
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free delivery on orders over $100
-        </p>
-
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
+              {/* Mobile menu button */}
               <button
                 type="button"
                 onClick={() => setOpen(true)}
                 className="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
               >
-                <span className="absolute -inset-0.5" />
-                <span className="sr-only">Open menu</span>
                 <Bars3Icon aria-hidden="true" className="size-6" />
               </button>
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <Link href="#">
-                  <span className="sr-only">Your Company</span>
+                <Link to="/">
                   <img
-                    alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    className="h-8 w-auto"
+                    alt="Reform"
+                    src="https://tailwindcss.com/plus-assets/img/logos/158x48/reform-logo-gray-900.svg"
+                    width={158}
+                    height={48}
+                    className="max-h-12 w-full object-contain"
                   />
                 </Link>
               </div>
 
-              {/* Flyout menus */}
+              {/* Desktop navigation */}
               <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
                       <div className="relative flex">
-                        <PopoverButton className="group relative flex items-center justify-center text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:text-indigo-600">
+                        <PopoverButton className="group relative flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-800 data-open:text-indigo-600">
                           {category.name}
-                          <span
-                            aria-hidden="true"
-                            className="absolute inset-x-0 -bottom-px z-30 h-0.5 transition duration-200 ease-out group-data-open:bg-indigo-600"
-                          />
                         </PopoverButton>
                       </div>
-                      <PopoverPanel
-                        transition
-                        className="absolute inset-x-0 top-full z-20 w-full bg-white text-sm text-gray-500 transition data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-                      >
-                        {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                        <div aria-hidden="true" className="absolute inset-0 top-1/2 bg-white shadow-sm" />
+                      <PopoverPanel className="absolute inset-x-0 top-full z-20 w-full bg-white text-sm text-gray-500">
                         <div className="relative bg-white">
                           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
@@ -330,30 +286,20 @@ export default function Navigation() {
                                       src={item.imageSrc}
                                       className="aspect-square w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
                                     />
-                                    <Link href={item.href} className="mt-6 block font-medium text-gray-900">
-                                      <span aria-hidden="true" className="absolute inset-0 z-10" />
+                                    <Link to={`/category?type=${item.name}`} className="mt-6 block font-medium text-gray-900">
                                       {item.name}
                                     </Link>
-                                    <p aria-hidden="true" className="mt-1">
-                                      Shop now
-                                    </p>
                                   </div>
                                 ))}
                               </div>
                               <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
                                 {category.sections.map((section) => (
                                   <div key={section.name}>
-                                    <p id={`${section.name}-heading`} className="font-medium text-gray-900">
-                                      {section.name}
-                                    </p>
-                                    <ul
-                                      role="list"
-                                      aria-labelledby={`${section.name}-heading`}
-                                      className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                    >
+                                    <p className="font-medium text-gray-900">{section.name}</p>
+                                    <ul className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
                                       {section.items.map((item) => (
                                         <li key={item.name} className="flex">
-                                          <Link href={item.href} className="hover:text-gray-800">
+                                          <Link to={`/category?type=${item.name}`} className="hover:text-gray-800">
                                             {item.name}
                                           </Link>
                                         </li>
@@ -371,7 +317,7 @@ export default function Navigation() {
                   {navigation.pages.map((page) => (
                     <Link
                       key={page.name}
-                      href={page.href}
+                      to={page.href}
                       className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       {page.name}
@@ -380,92 +326,27 @@ export default function Navigation() {
                 </div>
               </PopoverGroup>
 
+              {/* Right section */}
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    <Menu as="div" className="relative inline-block">
-      <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring-1 inset-ring-gray-300 hover:bg-gray-50">
-        Profile
-        <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
-      </MenuButton>
-
-      <MenuItems
-        transition
-        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg outline-1 outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-      >
-        <div className="py-1">
-          <MenuItem>
-            <Link
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-            >
-              Account settings
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-            >
-              Support
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link to ="/signin"
-              className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-            >
-              Sign in
-            </Link>
-          </MenuItem>
-          <form action="#" method="POST">
-            <MenuItem>
-              <button
-                type="submit"
-                className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-              >
-                Sign out
-              </button>
-            </MenuItem>
-          </form>
-        </div>
-      </MenuItems>
-    </Menu>
+                  <Link to="/signin" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                    Sign in
                   </Link>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <Link to="/signup" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Create account
-                  </Link>
-                </div>
-
-                <div className="hidden lg:ml-8 lg:flex">
-                  <Link href="#" className="flex items-center text-gray-700 hover:text-gray-800">
-                    <img
-                      alt=""
-                      src="https://tailwindcss.com/plus-assets/img/flags/flag-canada.svg"
-                      className="block h-auto w-5 shrink-0"
-                    />
-                    <span className="ml-3 block text-sm font-medium">CAD</span>
-                    <span className="sr-only">, change currency</span>
-                  </Link>
-                </div>
-
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <Link href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
                   </Link>
                 </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link href="#" className="group -m-2 flex items-center p-2">
+                  <Link to="/cart" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-                    <span className="sr-only">items in cart, view bag</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">3</span>
+                   
                   </Link>
                 </div>
               </div>
@@ -476,3 +357,4 @@ export default function Navigation() {
     </div>
   )
 }
+

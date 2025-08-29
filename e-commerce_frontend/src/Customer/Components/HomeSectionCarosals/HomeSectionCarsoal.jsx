@@ -8,103 +8,115 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 const products = [
   {
     id: 1,
-     product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Earthen Bottle',
     href: '#',
     price: '$48',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-01.jpg',
     imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    color: 'White' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+    color: 'White',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
     rating: 4,
   },
   {
     id: 2,
-     product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Nomad Tumbler',
     href: '#',
     price: '$35',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-02.jpg',
     imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    color: 'Green' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+    color: 'Green',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
     rating: 4,
   },
   {
     id: 3,
-     product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Focus Paper Refill',
     href: '#',
     price: '$89',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-03.jpg',
     imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    color: 'White' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+    color: 'White',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
     rating: 5,
   },
   {
     id: 4,
-     product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Machined Mechanical Pencil',
     href: '#',
     price: '$35',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    color: 'Black' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+    imageAlt:
+      'Hand holding black machined steel mechanical pencil with brass tip and top.',
+    color: 'Black',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
     rating: 4,
   },
   {
     id: 5,
-     product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Focus Card Tray',
     href: '#',
     price: '$64',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-05.jpg',
     imageAlt: 'Paper card sitting upright in walnut card holder on desk.',
-    color: 'Brown' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
-    rating: 4
+    color: 'Brown',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
+    rating: 4,
   },
   {
     id: 6,
-     product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Focus Multi-Pack',
     href: '#',
     price: '$39',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg',
-    imageAlt: 'Stack of 3 small drab green cardboard paper card refill boxes with white text.',
-    color: 'Green' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+    imageAlt:
+      'Stack of 3 small drab green cardboard paper card refill boxes with white text.',
+    color: 'Green',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
     rating: 5,
   },
   {
     id: 7,
-     product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Brass Scissors',
     href: '#',
     price: '$50',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-07.jpg',
-    imageAlt: 'Brass scissors with geometric design, black steel finger holes, and included upright brass stand.',
-    color: 'Brass' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+    imageAlt:
+      'Brass scissors with geometric design, black steel finger holes, and included upright brass stand.',
+    color: 'Brass',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
     rating: 3,
   },
   {
     id: 8,
-    product_type:'t-shirt',
+    product_type: 't-shirt',
     name: 'Focus Carry Pouch',
     href: '#',
     price: '$32',
     imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-08.jpg',
-    imageAlt: 'Textured gray felt pouch for paper cards with snap button flap and elastic pen holder loop.',
-    color: 'Gray' ,
-    Description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.',
+    imageAlt:
+      'Textured gray felt pouch for paper cards with snap button flap and elastic pen holder loop.',
+    color: 'Gray',
+    Description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
     rating: 4,
   },
 ];
 
-export default function HomeSectionCarousel({sectionName}) {
+export default function HomeSectionCarousel({ sectionName }) {
   const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -118,15 +130,19 @@ export default function HomeSectionCarousel({sectionName}) {
   };
 
   const items = products.map((product) => (
-    <HomeSectionCard key={product.id} product={product} />
+    <div key={product.id} className="px-2">
+      <HomeSectionCard product={product} />
+    </div>
   ));
 
   return (
     <div className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-20">
-      <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-       { sectionName|| 'Customers also purchased'}
+      {/* Section Heading */}
+      <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 mb-6">
+        {sectionName || 'Customers also purchased'}
       </h2>
 
+      {/* Carousel */}
       <AliceCarousel
         ref={carouselRef}
         mouseTracking
@@ -136,9 +152,11 @@ export default function HomeSectionCarousel({sectionName}) {
         disableDotsControls
         activeIndex={activeIndex}
         onSlideChanged={(e) => setActiveIndex(e.item)}
+        
+        infinite
       />
 
-      {/* Left Button */}
+      {/* Navigation Buttons */}
       {activeIndex > 0 && (
         <Button
           variant="contained"
@@ -146,20 +164,22 @@ export default function HomeSectionCarousel({sectionName}) {
           style={{
             position: 'absolute',
             top: '50%',
-            left: '0.5rem',
-            transform: 'translateY(-50%) rotate(90deg)',
+            left: '1rem',
+            transform: 'translateY(-50%)',
             zIndex: 10,
-            backgroundColor: '#f1f5f9', // light gray background
-            color: '#000', // black arrow color
-            boxShadow: '0px 2px 6px rgba(0,0,0,0.2)',
+            backgroundColor: '#ffffff',
+            color: '#1e293b',
+            boxShadow: '0px 3px 10px rgba(0,0,0,0.15)',
+            borderRadius: '50%',
+            minWidth: '40px',
+            height: '40px',
           }}
           aria-label="Previous"
         >
-          <KeyboardDoubleArrowLeftIcon style={{ transform: 'rotate(-90deg)' }} />
+          <KeyboardDoubleArrowLeftIcon />
         </Button>
       )}
 
-      {/* Right Button */}
       {activeIndex < products.length - 4 && (
         <Button
           variant="contained"
@@ -167,16 +187,19 @@ export default function HomeSectionCarousel({sectionName}) {
           style={{
             position: 'absolute',
             top: '50%',
-            right: '0.5rem',
-            transform: 'translateY(-50%) rotate(-90deg)',
+            right: '1rem',
+            transform: 'translateY(-50%) rotate(180deg)',
             zIndex: 10,
-            backgroundColor: '#f1f5f9',
-            color: '#000',
-            boxShadow: '0px 2px 6px rgba(0,0,0,0.2)',
+            backgroundColor: '#ffffff',
+            color: '#1e293b',
+            boxShadow: '0px 3px 10px rgba(0,0,0,0.15)',
+            borderRadius: '50%',
+            minWidth: '40px',
+            height: '40px',
           }}
           aria-label="Next"
         >
-          <KeyboardDoubleArrowLeftIcon style={{ transform: 'rotate(-90deg)' }} />
+          <KeyboardDoubleArrowLeftIcon />
         </Button>
       )}
     </div>

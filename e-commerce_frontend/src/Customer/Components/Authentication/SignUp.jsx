@@ -1,25 +1,42 @@
-import {Link} from 'react-router-dom'
-export default function Signin() {
+import { Link } from "react-router-dom";
+
+
+export default function SignUp() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-indigo-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-6">
       <div className="w-full max-w-md rounded-2xl bg-white/80 backdrop-blur-md shadow-xl p-8 dark:bg-gray-800/80 transition-all duration-300 hover:shadow-2xl">
         {/* Logo Section */}
         <div className="flex flex-col items-center">
-          <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-            className="mx-auto h-12 w-auto mb-4"
-          />
+          
           <h2 className="text-center text-3xl font-bold text-gray-900 dark:text-white">
-            Welcome Back
+            Create an Account
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Sign in to access your account
+            Sign up to get started with your free account
           </p>
         </div>
 
         {/* Form Section */}
         <form action="#" method="POST" className="mt-8 space-y-6">
+          {/* Full Name */}
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              Full Name
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              className="mt-2 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:placeholder-gray-500"
+              placeholder="John Doe"
+            />
+          </div>
+
+          {/* Email */}
           <div>
             <label
               htmlFor="email"
@@ -32,54 +49,64 @@ export default function Signin() {
               name="email"
               type="email"
               required
-              autoComplete="email"
               className="mt-2 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:placeholder-gray-500"
               placeholder="you@example.com"
             />
           </div>
 
+          {/* Password */}
           <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-900 dark:text-gray-100"
-              >
-                Password
-              </label>
-              <Link
-                to="#"
-                className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-              >
-                Forgot?
-              </Link>
-            </div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              Password
+            </label>
             <input
               id="password"
               name="password"
               type="password"
               required
-              autoComplete="current-password"
               className="mt-2 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:placeholder-gray-500"
               placeholder="••••••••"
             />
           </div>
 
+          {/* Confirm Password */}
+          <div>
+            <label
+              htmlFor="confirm-password"
+              className="block text-sm font-medium text-gray-900 dark:text-gray-100"
+            >
+              Confirm Password
+            </label>
+            <input
+              id="confirm-password"
+              name="confirm-password"
+              type="password"
+              required
+              className="mt-2 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:placeholder-gray-500"
+              placeholder="••••••••"
+            />
+          </div>
+
+          {/* Signup Button */}
           <button
             type="submit"
             className="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition duration-300 hover:bg-indigo-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 dark:bg-indigo-500 dark:hover:bg-indigo-400"
           >
-            Sign in
+            Sign Up
           </button>
         </form>
 
-        {/* Footer Section */}
+        {/* Footer */}
         <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-          Not a member?{' '}
+          Already have an account?{' '}
           <Link
-            to="/signup"
+           to="/signin"
             className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
           >
-            Sign up 
+            Sign in
           </Link>
         </p>
       </div>
