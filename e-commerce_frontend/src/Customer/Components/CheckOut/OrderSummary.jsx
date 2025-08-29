@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 export default function OrderSummary() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const selectedAddress = location.state?.selectedAddress;
+
   const [cartItems, setCartItems] = useState([
     { id: 1, name: "Wireless Headphones", price: 2999, quantity: 1 },
     { id: 2, name: "Smart Watch", price: 4999, quantity: 2 },
     { id: 3, name: "Gaming Mouse", price: 1999, quantity: 1 },
   ]);
-
-  // Mock address from backend
-  const [deliveryAddress, setDeliveryAddress] = useState(null);
-
-  useEffect(() => {
-    // Simulating API call
-    setTimeout(() => {
-      setDeliveryAddress({
-        firstName: "John",
-        lastName: "Doe",
-        address: "123 MG Road, Bangalore, Karnataka",
-        pincode: "560001",
-        phone: "9876543210",
-      });
-    }, 1000);
-  }, []);
 
   const updateQuantity = (id, type) => {
     setCartItems((prev) =>
@@ -43,8 +33,18 @@ export default function OrderSummary() {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const tax = totalPrice * 0.18; // 18% GST
+  const tax = totalPrice * 0.18;
   const grandTotal = totalPrice + tax;
+
+  // Navigate to payment step
+  const handlePlaceOrder = () => {
+    navigate(`?step=3`, {
+      state: {
+        selectedAddress: selectedAddress,
+        orderSummary: { cartItems, totalPrice, tax, grandTotal },
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col gap-6 p-6 bg-gray-50 min-h-screen">
@@ -53,67 +53,63 @@ export default function OrderSummary() {
         <h2 className="text-xl font-semibold mb-4 text-gray-700">
           Delivery Address
         </h2>
-        {deliveryAddress ? (
+        {selectedAddress ? (
           <div className="text-gray-700">
             <p>
               <span className="font-semibold">
-                {deliveryAddress.firstName} {deliveryAddress.lastName}
+                {selectedAddress.firstName} {selectedAddress.lastName}
               </span>
             </p>
-            <p>{deliveryAddress.address}</p>
-            <p>Pincode: {deliveryAddress.pincode}</p>
-            <p>Phone: {deliveryAddress.phone}</p>
+            <p>{selectedAddress.address}</p>
+            <p>Pincode: {selectedAddress.pincode}</p>
+            <p>Phone: {selectedAddress.phone}</p>
           </div>
         ) : (
-          <p className="text-gray-500">Fetching delivery address...</p>
+          <p className="text-gray-500">
+            No address selected. Go back and choose one.
+          </p>
         )}
       </div>
 
-      {/* Main Content */}
+      {/* Order Details */}
       <div className="flex flex-col md:flex-row gap-6">
-        {/* Left - Cart Items */}
+        {/* Cart Items */}
         <div className="w-full md:w-2/3 bg-white shadow-lg rounded-2xl p-4">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
-            Your Cart
-          </h2>
-          {cartItems.length === 0 ? (
-            <p className="text-gray-500">Your cart is empty.</p>
-          ) : (
-            cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex justify-between items-center border rounded-lg p-3 mb-3 hover:shadow-md"
-              >
-                <div>
-                  <h3 className="font-semibold text-gray-800">{item.name}</h3>
-                  <p className="text-gray-600 text-sm">
-                    ₹{item.price.toLocaleString()} x {item.quantity}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => updateQuantity(item.id, "decrease")}
-                    className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
-                  >
-                    -
-                  </button>
-                  <span>{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.id, "increase")}
-                    className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
-                  >
-                    +
-                  </button>
-                </div>
-                <div className="font-semibold text-gray-700">
-                  ₹{(item.price * item.quantity).toLocaleString()}
-                </div>
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">Your Cart</h2>
+          {cartItems.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center border rounded-lg p-3 mb-3 hover:shadow-md"
+            >
+              <div>
+                <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                <p className="text-gray-600 text-sm">
+                  ₹{item.price.toLocaleString()} x {item.quantity}
+                </p>
               </div>
-            ))
-          )}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => updateQuantity(item.id, "decrease")}
+                  className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                >
+                  -
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  onClick={() => updateQuantity(item.id, "increase")}
+                  className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                >
+                  +
+                </button>
+              </div>
+              <div className="font-semibold text-gray-700">
+                ₹{(item.price * item.quantity).toLocaleString()}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Right - Order Summary */}
+        {/* Order Summary */}
         <div className="w-full md:w-1/3 bg-white shadow-lg rounded-2xl p-4">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Order Summary
@@ -130,14 +126,17 @@ export default function OrderSummary() {
             <span>Total</span>
             <span>₹{grandTotal.toFixed(2)}</span>
           </div>
+
+          {/* Place Order Button */}
           <button
-            className="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-            onClick={() => alert("Proceeding to Checkout...")}
+            onClick={handlePlaceOrder}
+            className="w-full mt-6 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg text-lg font-semibold shadow-md transition"
           >
-            Proceed to Checkout
+            Place Order
           </button>
         </div>
       </div>
+      
     </div>
   );
 }

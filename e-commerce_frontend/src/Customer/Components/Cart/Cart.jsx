@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([
@@ -17,6 +18,15 @@ export default function Cart() {
       name: "Smart Watch",
       price: 4999,
       quantity: 2,
+      image:
+        "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg",
+    },
+    {
+      id: 3,
+      user_id: 1,
+      name: "Bluetooth Speaker",
+      price: 1999,
+      quantity: 1,
       image:
         "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg",
     },
@@ -189,7 +199,8 @@ export default function Cart() {
 
           {/* Checkout Button */}
           <button className="mt-6 w-full bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition">
-            Place Order
+            <Link to="/checkout">Place Order</Link>
+            
           </button>
         </div>
       </div>

@@ -4,6 +4,7 @@ import SignUp from './Customer/Components/Authentication/SignUp';
 import Cart from './Customer/Components/Cart/Cart';
 import Category from './Customer/Components/CateogryPages/Cateogry';
 import CheckOut from './Customer/Components/CheckOut/CheckOut';
+import Order from './Customer/Components/Order/Order';
 import ProductDescription from './Customer/Components/ProductDescription/ProductDescription';
 import HomePage from './Customer/Pages/HomePage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -19,7 +20,7 @@ function App() {
         <Route path= "/signup" element ={<SignUp/>}></Route>
         <Route path='/cart' element = {<Cart/>}></Route>
         <Route path='/checkout' element = {<CheckOut/>}></Route>
-        
+        <Route path='/order' element = {<Order/>}></Route>
       </Routes>
     </Router>
   );

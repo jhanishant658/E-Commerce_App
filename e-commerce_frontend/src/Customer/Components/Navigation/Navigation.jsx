@@ -139,7 +139,7 @@ const navigation = {
     },
   ],
   pages: [
-    { name: 'Company', href: '/company' },
+    { name: 'My Orders', href: '/order' },
     { name: 'Stores', href: '/stores' },
   ],
 }

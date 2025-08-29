@@ -72,6 +72,18 @@ const filters = [
       { value: '40l', label: '40L', checked: true },
     ],
   },
+  {
+    id: 'DisCount',
+    name: 'DisCount',
+    options: [
+      { value: '10%', label: '10%', checked: false },
+      { value: '20%', label: '20%', checked: false },
+      { value: '30%', label: '30%', checked: false },
+      { value: '40%', label: '40%', checked: false },
+      { value: '50%', label: '50%', checked: false },
+      
+    ],
+  },
 
 ]
 

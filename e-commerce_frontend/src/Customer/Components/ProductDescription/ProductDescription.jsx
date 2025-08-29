@@ -4,6 +4,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BoltIcon from "@mui/icons-material/Bolt";
 import Footer from "../Footer/Footer";
+import { Link } from "react-router-dom";
 
 const ProductDescription = () => {
   const product = {
@@ -65,7 +66,8 @@ const ProductDescription = () => {
               <ShoppingCartIcon /> Add to Cart
             </button>
             <button className="flex items-center justify-center gap-2 flex-1 bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg text-lg font-semibold shadow-md transition">
-              <BoltIcon /> Buy Now
+              <BoltIcon />
+              <Link to ="/checkout">Buy Now</Link> 
             </button>
           </div>
         </div>
