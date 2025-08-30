@@ -1,15 +1,14 @@
 package com.example.E_Commerce.Models;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,21 +19,18 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review {
- @Id
- @GeneratedValue(strategy = GenerationType.AUTO)
-
-    private Long id;
-    private String review;
+@Table(name = "categories")
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+ private Long id;
+ @NotNull
+ @Size(min = 2, max = 50)
+ private String name;
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    @JsonIgnore
-    private Product product;
-    
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    private LocalDateTime createdAt;
-    
+    @JoinColumn(name = "parent_category_id")
 
+ private Category parentCategory;
+ private int level;
+ 
 }
