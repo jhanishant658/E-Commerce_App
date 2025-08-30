@@ -23,35 +23,44 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtValidator extends OncePerRequestFilter  {
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        
-       String jwt = request.getHeader(JwtConstant.JWT_HEADER);
-         // Logic to validate the JWT token
-        if(jwt!=null){
-           jwt = jwt.substring(07);
-           try{
-            
+   @Override
+protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+        throws ServletException, IOException {
+
+    String jwt = request.getHeader(JwtConstant.JWT_HEADER);
+
+    try {
+        // Agar header me token hai tabhi validate karo
+        if (jwt != null && jwt.startsWith("Bearer ")) {
+            jwt = jwt.substring(7); // Corrected substring
+
             SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_key.getBytes());
-            Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(jwt)
+                    .getBody();
+
             String email = String.valueOf(claims.get("email"));
             String authorities = String.valueOf(claims.get("authorities"));
-            List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(email,null, auth) ; 
-            // Set the authentication in the security context
+
+            List<GrantedAuthority> auth =
+                    AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+
+            Authentication authentication =
+                    new UsernamePasswordAuthenticationToken(email, null, auth);
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            
-            
-           }
-           catch(Exception e){
-            throw new BadCredentialsException(jwt+" : Invalid Token");
-           }
-              filterChain.doFilter(request, response);
         }
-        
+
+        // Har case me chain aage badhao
+        filterChain.doFilter(request, response);
+
+    } catch (Exception e) {
+        throw new BadCredentialsException(jwt + " : Invalid Token");
     }
-  
+}
+
     // Placeholder for JWT validation logic
   
    
