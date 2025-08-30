@@ -1,5 +1,6 @@
 package com.example.E_Commerce.Models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -58,6 +59,11 @@ private int numberOfRatings;
 @ManyToOne
 @JoinColumn(name = "category_id")
 private Category category;
+@Column(name ="stock")
+private int stock;
+@Column(name = "Created_At")
+
+private LocalDateTime createdAt;
 public Product() {
 }
 
