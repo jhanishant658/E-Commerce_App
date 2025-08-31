@@ -14,22 +14,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
   
 
-    List<Product> findByCategory(String category);
-    @Query("select p from Product p  " + "where (:category is null or p.category.name = :category) " +
-    "and (:color is null or p.color = :color) " + 
-    "and (:minPrice is null or p.discountedPrice >= :minPrice) " +
-    "and (:maxPrice is null or p.discountedPrice <= :maxPrice) "
-    + "and (:minDiscount is null or p.discountpercent >= :minDiscount) " +
-    "and (:maxDiscount is null or p.discountpercent <= :maxDiscount) " +
-    "and p.stock > 0 " +
-    "order by " +
-    "case when :sortBy = 'priceAsc' then p.discountedPrice end asc, " +
-    "case when :sortBy = 'priceDesc' then p.discountedPrice end desc, " +
-    "case when :sortBy = 'discountAsc' then p.discountpercent end asc, " +
-    "case when :sortBy = 'discountDesc' then p.discountpercent end desc")
+    List<Product> findByCategoryName(@Param("name") String name);
+    @Query("SELECT p FROM Product p " +
+       "WHERE (:category IS NULL OR p.category.name = :category) " +
+       "AND (:color IS NULL OR p.color = :color) " +
+       "AND (:minPrice IS NULL OR p.discountedPrice >= :minPrice) " +
+       "AND (:maxPrice IS NULL OR p.discountedPrice <= :maxPrice) " +
+       "AND p.stock > 0")
+List<Product> filterProducts(
+    @Param("category") String category,
+    @Param("color") String color,
+    @Param("minPrice") Integer minPrice,
+    @Param("maxPrice") Integer maxPrice
+);
 
-    public List<Product> filteProducts(@Param ("category") String category, @Param ("color") String color, @Param ("minPrice") 
-    Integer minPrice, @Param ("maxPrice") Integer maxPrice, @Param ("minDiscount") Integer minDiscount, @Param ("maxDiscount") Integer maxDiscount,
-     @Param("sortBy") String sortBy);
-    
 }

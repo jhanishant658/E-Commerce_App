@@ -12,6 +12,7 @@ import com.example.E_Commerce.Repositories.CategoryRepository;
 import com.example.E_Commerce.Repositories.ProductRepository;
 import com.example.E_Commerce.Request.CreateProductRequest;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 
@@ -21,7 +22,7 @@ public class ProductService {
     private ProductRepository productRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-    public ResponseEntity<Product> CreateProduct(CreateProductRequest request){ 
+    public ResponseEntity<Product> createProduct(CreateProductRequest request){ 
 
         try {
             Category topCategory = categoryRepository.findByName(request.getFirstlevelCategory());
@@ -128,7 +129,7 @@ public class ProductService {
     }
     public ResponseEntity<List<Product>> getProductByCategory(String category){
         try {
-            List<Product> products = productRepository.findByCategory(category);
+            List<Product> products = productRepository.findByCategoryName(category);
             if (products.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
@@ -138,37 +139,59 @@ public class ProductService {
             return ResponseEntity.status(500).build();
         }
     }
-    public ResponseEntity<List<Product>> filterProducts(String category, List<String> colors, Integer minPrice, Integer maxPrice,
-     Integer minDiscount, Integer maxDiscount, String sortBy){
-        try {
-            List<Product> products =  new java.util.ArrayList<>();
-            for(int i =0 ; i< colors.size() ; i++){
-                List<Product> colorFilteredProducts = productRepository.filteProducts(category,colors.get(i), minPrice, maxPrice, minDiscount, maxDiscount, sortBy);
-                products.addAll(colorFilteredProducts);
-            }
-            Collections.sort(products, (p1, p2) -> {
-                switch (sortBy) {
-                    case "priceAsc":
-                        return Double.compare(p1.getDiscountedPrice(), p2.getDiscountedPrice());
-                    case "priceDesc":
-                        return Double.compare(p2.getDiscountedPrice(), p1.getDiscountedPrice());
-                    case "discountAsc":
-                        return p1.getDiscountpercent().compareTo(p2.getDiscountpercent());
-                    case "discountDesc":
-                        return p2.getDiscountpercent().compareTo(p1.getDiscountpercent());
-                    default:
-                        return 0;
-                }
-            });
-            if (products.isEmpty()) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(products);
-        } catch (Exception e) {
-            System.out.println("Error filtering products: " + e.getMessage());
-            return ResponseEntity.status(500).build();
-        }
-    }
+   public ResponseEntity<List<Product>> filterProducts(String category, List<String> colors, Integer minPrice, Integer maxPrice,
+     Integer minDiscount, Integer maxDiscount, String sortBy) {
 
+    try {
+        List<Product> products = new ArrayList<>();
+
+        if (colors == null || colors.isEmpty()) {
+            colors = List.of((String) null); // null for all colors
+        }
+
+        for (String color : colors) {
+            List<Product> colorFiltered = productRepository.filterProducts(category, color, minPrice, maxPrice);
+            
+            // Discount filter backend me
+            for (Product p : colorFiltered) {
+                int discount = Integer.parseInt(p.getDiscountpercent().replace("%",""));
+                if ((minDiscount == null || discount >= minDiscount) &&
+                    (maxDiscount == null || discount <= maxDiscount)) {
+                    products.add(p);
+                }
+            }
+        }
+
+        // Sorting
+        Collections.sort(products, (p1, p2) -> {
+            switch (sortBy) {
+                case "priceAsc":
+                    return Double.compare(p1.getDiscountedPrice(), p2.getDiscountedPrice());
+                case "priceDesc":
+                    return Double.compare(p2.getDiscountedPrice(), p1.getDiscountedPrice());
+                case "discountAsc":
+                    return Integer.compare(
+                        Integer.parseInt(p1.getDiscountpercent().replace("%","")),
+                        Integer.parseInt(p2.getDiscountpercent().replace("%",""))
+                    );
+                case "discountDesc":
+                    return Integer.compare(
+                        Integer.parseInt(p2.getDiscountpercent().replace("%","")),
+                        Integer.parseInt(p1.getDiscountpercent().replace("%",""))
+                    );
+                default:
+                    return 0;
+            }
+        });
+
+        if (products.isEmpty()) return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(products);
+
+    } catch (Exception e) {
+        System.out.println("Error filtering products: " + e.getMessage());
+        return ResponseEntity.status(500).build();
+    }
+}
 
 }
