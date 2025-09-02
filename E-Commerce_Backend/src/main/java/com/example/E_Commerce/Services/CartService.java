@@ -1,7 +1,7 @@
 package com.example.E_Commerce.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
 import com.example.E_Commerce.Models.Cart;
@@ -15,8 +15,7 @@ import com.example.E_Commerce.Request.AddItemRequest;
 public class CartService {
       @Autowired
     private CartRepository cartRepository;
-     @Autowired
-    private Product product ; 
+      
     @Autowired
     private CartItemService cartItemService ;
     @Autowired 
