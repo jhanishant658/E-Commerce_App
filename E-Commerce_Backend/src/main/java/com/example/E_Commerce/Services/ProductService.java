@@ -72,21 +72,21 @@ public class ProductService {
         
     }
 
-    public ResponseEntity<Product> getProductById(Long id){
+    public Product getProductById(Long id){
         try {
             Product product = productRepository.findById(id).orElse(null);
             
             if (product == null) {
-                return ResponseEntity.notFound().build();
+                return null;
             }
             if(product.getStock() <= 0){
                  System.out.println("Product is out of stock");
-                return ResponseEntity.status(400).body(null);
+                return null;
             }
-            return ResponseEntity.ok(product);
+            return product;
         } catch (Exception e) {
             System.out.println("Error retrieving product: " + e.getMessage());
-            return ResponseEntity.status(500).build();
+            return null;
         }
     }
     public ResponseEntity<String> deleteProductById(Long id){

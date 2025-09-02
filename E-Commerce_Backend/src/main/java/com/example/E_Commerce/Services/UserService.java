@@ -61,5 +61,13 @@ public ResponseEntity<AuthResponse> registerUser(User user) {
         String token = jwtProvider.generateToken(auth);
         return ResponseEntity.ok(new AuthResponse("User logged in successfully", token));
     }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
     
 }

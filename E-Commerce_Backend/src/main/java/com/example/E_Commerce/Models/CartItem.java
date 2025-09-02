@@ -27,4 +27,6 @@ public class CartItem {
     private String size;
     private int quantity;
     private double price;
+    private double discountedPrice;
+    private double userId ; 
 }
