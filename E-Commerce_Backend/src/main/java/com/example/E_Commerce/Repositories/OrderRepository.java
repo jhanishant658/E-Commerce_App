@@ -1,10 +1,10 @@
 package com.example.E_Commerce.Repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.example.E_Commerce.Models.Order;
-@Repository
+import com.example.E_Commerce.Models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    
+    List<Order> findByUser(User user);
 }
