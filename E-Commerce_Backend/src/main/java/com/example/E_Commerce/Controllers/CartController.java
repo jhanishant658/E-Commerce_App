@@ -23,12 +23,12 @@ public class CartController {
     public Cart createCart(@RequestBody User user) {
         return cartService.createCart(user);
     }
-    @PostMapping("/cartitem")
+    @PostMapping("/cartitem/{userId}")
     public String postMethodName(@PathVariable Long userId ,@RequestBody AddItemRequest req  ) {
         return cartService.addCartItem(userId , req);
     }
       
-    @GetMapping("/usercart")
+    @GetMapping("/usercart/{userId}")
     public Cart findUserCart(@PathVariable Long userId){
         return cartService.findUserCart(userId);
     }

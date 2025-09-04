@@ -28,7 +28,7 @@ public class ReviewController {
         User user = userService.getUserById(userId);
         return reviewService.CreateReview(req , user);
     }
-    @GetMapping
+    @GetMapping("/{productId}")
     public List<Review> getAllReviews(@PathVariable Long productId){
         return reviewService.getAllReview(productId);
     }

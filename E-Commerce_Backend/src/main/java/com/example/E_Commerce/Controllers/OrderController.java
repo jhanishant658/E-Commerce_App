@@ -42,7 +42,7 @@ public class OrderController {
     public Order getOrderDetails(@PathVariable Long orderid){
         return orderService.getOrderById(orderid);
     }
-    @PatchMapping("/updateOrder")
+    @PatchMapping("/updateOrder/{orderId}/{OrderStatus}")
     public Order updateOrderStatus(@PathVariable Long orderId ,@PathVariable String OrderStatus){
         return orderService.updateOrderStatus(orderId, OrderStatus);
     }

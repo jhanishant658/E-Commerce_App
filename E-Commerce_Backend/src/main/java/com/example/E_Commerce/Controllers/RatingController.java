@@ -32,7 +32,7 @@ public class RatingController {
          User user = userService.getUserById(userId);
         return ratingService.createRating(req, user);
     }
-    @GetMapping
+    @GetMapping("/{productId}")
     public List<Rating> getAllRating(@PathVariable Long productId) {
         return ratingService.getProductRating(productId);
     }
