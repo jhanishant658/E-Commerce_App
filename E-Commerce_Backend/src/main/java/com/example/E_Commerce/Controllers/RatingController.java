@@ -7,6 +7,7 @@ import com.example.E_Commerce.Models.Rating;
 import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Request.RatingRequest;
 import com.example.E_Commerce.Services.RatingService;
+import com.example.E_Commerce.Services.UserService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -25,8 +25,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class RatingController {
    @Autowired
    private RatingService ratingService;
-    @PostMapping
-    public Rating createRating(@RequestBody RatingRequest req, @AuthenticationPrincipal User user) {
+   @Autowired
+   private UserService userService;
+    @PostMapping("/{userId}")
+    public Rating createRating(@RequestBody RatingRequest req, @PathVariable Long userId) {
+         User user = userService.getUserById(userId);
         return ratingService.createRating(req, user);
     }
     @GetMapping
