@@ -61,4 +61,8 @@ public class CartService {
       cart.setDiscountedPrice(totalPrice-totalDiscount);
       return cartRepository.save(cart) ; 
     }
+    public void deleteCartItem(Long userId){
+      Cart cart = cartRepository.findByUserId(userId) ; 
+      cartRepository.delete(cart);
+    }
 }

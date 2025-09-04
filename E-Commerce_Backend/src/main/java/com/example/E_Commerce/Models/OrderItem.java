@@ -21,20 +21,20 @@ import lombok.Setter;
 @AllArgsConstructor
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-
-    private Long id;
+  
+@GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;//
     @JsonIgnore
     @ManyToOne
     private Order order;
       @JsonIgnore
     @ManyToOne
-    private Product product;
-    private String size ;
-    private int quantity;
-    private double price;
-    private double discountedPrice;
-    private long userId;
+    private Product product;//
+    private String size ;//
+    private int quantity;//
+    private double price;//
+    private double discountedPrice;//
+    private long userId;//
     private LocalDateTime deliveryDate; ;
 
 }

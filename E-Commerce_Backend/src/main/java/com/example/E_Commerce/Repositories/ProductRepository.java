@@ -28,4 +28,5 @@ List<Product> filterProducts(
     @Param("maxPrice") Integer maxPrice
 );
 
+
 }

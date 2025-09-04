@@ -23,10 +23,10 @@ public class CartItem {
    @ManyToOne
    @JsonIgnore
    private Cart cart;
-   private Product product;
-    private String size;
-    private int quantity;
-    private double price;
-    private double discountedPrice;
-    private double userId ; 
+   private Product product;//
+    private String size;//
+    private int quantity;//
+    private double price;//
+    private double discountedPrice;//
+    private double userId ; //
 }
