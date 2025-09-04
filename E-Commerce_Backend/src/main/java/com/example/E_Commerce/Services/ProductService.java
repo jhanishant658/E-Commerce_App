@@ -127,18 +127,30 @@ public class ProductService {
             return ResponseEntity.status(500).build();
         }
     }
-    public ResponseEntity<List<Product>> getProductByCategory(String category){
-        try {
-            List<Product> products = productRepository.findByCategoryName(category);
-            if (products.isEmpty()) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(products);
-        } catch (Exception e) {
-            System.out.println("Error retrieving products: " + e.getMessage());
-            return ResponseEntity.status(500).build();
+   public ResponseEntity<List<Product>> getProductByCategory(String categoryName) {
+    try {
+        Category category = categoryRepository.findByName(categoryName);
+
+        if (category == null) {
+            System.out.println("Category Not Found");
+            return ResponseEntity.notFound().build(); // category hi nahi mili
         }
+
+        List<Product> products = productRepository.findByCategory(category);
+
+        if (products == null || products.isEmpty()) {
+            System.out.println("Product Not Found");
+            return ResponseEntity.notFound().build(); // category mili but product nahi
+        }
+
+        return ResponseEntity.ok(products);
+
+    } catch (Exception e) {
+        System.out.println("Error retrieving products: " + e.getMessage());
+        return ResponseEntity.status(500).build();
     }
+}
+
    public ResponseEntity<List<Product>> filterProducts(String category, List<String> colors, Integer minPrice, Integer maxPrice,
      Integer minDiscount, Integer maxDiscount, String sortBy) {
 

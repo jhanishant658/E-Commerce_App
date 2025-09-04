@@ -32,7 +32,7 @@ public ResponseEntity<AuthResponse> registerUser(User user) {
 
     if (userRepository.findByEmail(user.getEmail()) != null) {
         System.out.println("Duplicate Email Found");
-        return ResponseEntity.badRequest().body(new AuthResponse("Email is already in use", null));
+        return ResponseEntity.badRequest().body(new AuthResponse(null, "Email is already in use"));
     }
 
     user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -44,7 +44,7 @@ public ResponseEntity<AuthResponse> registerUser(User user) {
     );
     System.out.println("Generated Token: " + token);
 
-    return ResponseEntity.ok(new AuthResponse("User registered successfully", token));
+    return ResponseEntity.ok(new AuthResponse(token, "user registered successfully"));
 }
 
     public ResponseEntity<AuthResponse> loginUser(LoginRequest loginRequest) {
@@ -52,14 +52,14 @@ public ResponseEntity<AuthResponse> registerUser(User user) {
         String password = loginRequest.getPassword();
         User user = userRepository.findByEmail(email);
         if(user == null){
-            return ResponseEntity.badRequest().body(new AuthResponse("User not found", null));
+            return ResponseEntity.badRequest().body(new AuthResponse(null, "Wrong Creadentials"));
         }
         if(!passwordEncoder.matches(password, user.getPassword())){
-            return ResponseEntity.badRequest().body(new AuthResponse("Invalid credentials", null)); 
+            return ResponseEntity.badRequest().body(new AuthResponse(null, "Invalid credentials")); 
         }
         Authentication auth = new UsernamePasswordAuthenticationToken(email, password);
         String token = jwtProvider.generateToken(auth);
-        return ResponseEntity.ok(new AuthResponse("User logged in successfully", token));
+        return ResponseEntity.ok(new AuthResponse(token, "User logged in successfully"));
     }
 
     public User getUserById(Long userId) {

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.example.E_Commerce.Models.Category;
 import com.example.E_Commerce.Models.Product;
 
 @Repository
@@ -14,7 +15,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
   
 
-    List<Product> findByCategoryName(@Param("name") String name);
+    
+    List<Product> findByCategory(Category category);
     @Query("SELECT p FROM Product p " +
        "WHERE (:category IS NULL OR p.category.name = :category) " +
        "AND (:color IS NULL OR p.color = :color) " +

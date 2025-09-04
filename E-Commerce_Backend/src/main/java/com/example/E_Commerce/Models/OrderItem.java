@@ -35,6 +35,6 @@ public class OrderItem {
     private double price;//
     private double discountedPrice;//
     private long userId;//
-    private LocalDateTime deliveryDate; ;
+    private LocalDateTime deliveryDate; 
 
 }

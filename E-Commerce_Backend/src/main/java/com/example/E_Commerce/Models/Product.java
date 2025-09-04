@@ -9,7 +9,6 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+
 
 public class Product {
 @Id
@@ -44,7 +44,7 @@ private String discountpercent;
 private int quantity;
 private String brand ;
 private String color;
-@Embedded
+
 @ElementCollection
 @Column(name ="sizes")
 private Set<Size> sizes = new HashSet<>();

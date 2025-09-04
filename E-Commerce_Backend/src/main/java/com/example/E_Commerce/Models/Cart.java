@@ -28,8 +28,8 @@ public class Cart {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @OneToMany(mappedBy = "cart", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
-    @Column(name ="cart_items")
-    private Set<CartItem> cartItems = new java.util.HashSet<>();
+    @Column(name = "cart_items")
+private Set<CartItem> cartItems = new java.util.HashSet<>();
      @Column(name ="total_price")
      private double totalPrice;
      @Column(name ="total_items")

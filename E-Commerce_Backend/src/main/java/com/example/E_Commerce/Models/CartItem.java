@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,10 @@ public class CartItem {
    @ManyToOne
    @JsonIgnore
    private Cart cart;
-   private Product product;//
+  @ManyToOne
+@JoinColumn(name = "product_id")
+private Product product;
+
     private String size;//
     private int quantity;//
     private double price;//
