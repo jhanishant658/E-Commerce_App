@@ -8,6 +8,7 @@ import com.example.E_Commerce.Models.Order;
 import com.example.E_Commerce.Models.OrderItem;
 import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Models.Cart;
+import com.example.E_Commerce.Repositories.AddressRepository;
 import com.example.E_Commerce.Repositories.CartRepository;
 import com.example.E_Commerce.Repositories.OrderRepository;
 
@@ -26,7 +27,8 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-   
+   @Autowired
+   private AddressRepository addressRepository;
     // Place an order for a user
     public Order placeOrder(User user, Address shippingAddress) {
         Cart cart = cartRepository.findByUserId(user.getId());
@@ -36,6 +38,8 @@ public class OrderService {
 
         Order order = new Order();
         order.setUser(user);
+        Address savedAddress = addressRepository.save(shippingAddress);
+         order.setShippingAddress(savedAddress);
         order.setShippingAddress(shippingAddress);
       List<OrderItem> orderItems = cart.getCartItems()
         .stream()

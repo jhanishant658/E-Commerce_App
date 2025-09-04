@@ -24,7 +24,7 @@ public class CartController {
         return cartService.createCart(user);
     }
     @PostMapping("/cartitem/{userId}")
-    public String postMethodName(@PathVariable Long userId ,@RequestBody AddItemRequest req  ) {
+    public String AddCartItem(@PathVariable Long userId ,@RequestBody AddItemRequest req  ) {
         return cartService.addCartItem(userId , req);
     }
       
