@@ -1,5 +1,5 @@
 package com.example.E_Commerce.Services;
-
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,6 @@ public class OrderService {
         order.setUser(user);
         Address savedAddress = addressRepository.save(shippingAddress);
          order.setShippingAddress(savedAddress);
-        order.setShippingAddress(shippingAddress);
       List<OrderItem> orderItems = cart.getCartItems()
         .stream()
         .map(cartItem -> {
@@ -50,6 +49,7 @@ public class OrderService {
             orderItem.setQuantity(cartItem.getQuantity());
             orderItem.setPrice(cartItem.getPrice());
             orderItem.setDiscountedPrice(cartItem.getDiscountedPrice());
+            orderItem.setDeliveryDate(LocalDateTime.now().plusWeeks(1));
             orderItem.setUserId((long) cartItem.getUserId()); // cast if userId is double in CartItem
             orderItem.setOrder(order); // important for mapping
             return orderItem;
@@ -60,8 +60,12 @@ order.setOrderItems(orderItems);
 
         order.setTotalAmount(cart.getTotalPrice());
         order.setOrderstatus("PLACED");
-        order.setCreatedAt(LocalDateTime.now());
-
+    order.setDeliveryDate(LocalDateTime.now().plusWeeks(1));
+ order.setOrderDate(LocalDateTime.now());
+ order.setTotalItems(cart.getTotalItems());
+ String orderId = UUID.randomUUID().toString();
+order.setOrderId(orderId);
+ order.setTotalDiscount(cart.getTotalDiscount());
         Order savedOrder = orderRepository.save(order);
 
         // Clear cart after placing order

@@ -1,5 +1,7 @@
 package com.example.E_Commerce.Services;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -63,6 +65,10 @@ public class CartService {
     }
     public void deleteCartItem(Long userId){
       Cart cart = cartRepository.findByUserId(userId) ; 
-      cartRepository.delete(cart);
+      Set<CartItem> cartItems = cart.getCartItems();
+      for(CartItem cartItem :cartItems){
+        cartItemService.removeCartItem(userId, cartItem.getId());
+      }
+      
     }
 }
