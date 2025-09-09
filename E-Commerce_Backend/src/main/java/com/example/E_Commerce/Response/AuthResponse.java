@@ -1,5 +1,6 @@
 package com.example.E_Commerce.Response;
 
+import com.example.E_Commerce.Models.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -12,4 +13,5 @@ import lombok.AllArgsConstructor;
 public class AuthResponse {
     private String jwt;
     private String message;
+    private User user ;
 }

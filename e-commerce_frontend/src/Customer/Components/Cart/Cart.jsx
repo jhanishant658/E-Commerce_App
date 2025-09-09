@@ -1,81 +1,75 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      user_id: 1,
-      name: "Wireless Headphones",
-      price: 2999,
-      quantity: 1,
-      image:
-        "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg",
-    },
-    {
-      id: 2,
-      user_id: 1,
-      name: "Smart Watch",
-      price: 4999,
-      quantity: 2,
-      image:
-        "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg",
-    },
-    {
-      id: 3,
-      user_id: 1,
-      name: "Bluetooth Speaker",
-      price: 1999,
-      quantity: 1,
-      image:
-        "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg",
-    },
-    {
-      id: 3,
-      user_id: 1,
-      name: "Bluetooth Speaker",
-      price: 1999,
-      quantity: 1,
-      image:
-        "https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg",
-    },
-  ]);
+  const [cart, setCart] = useState([]); 
+
+ // ...existing code...
+useEffect(() => {
+  const fetchCart = async () => {
+const user = JSON.parse(localStorage.getItem("User"));
+
+const token = localStorage.getItem("token");
+if(!user ){
+  console.log("No user ");
+  
+}
+if(!token) console.log("No token");
+console.log(user);
+const userId = user.id;
+
+    try {
+      const res = await axios.get(`http://localhost:8081/usercart/${userId}`);
+
+      // Flatten product info for each cart item
+      const items = (res.data.cartItems || []).map((item) => ({
+        id: item.id,
+        name: item.product.title,
+        price: item.product.price,
+        quantity: item.quantity,
+        imageUrl: item.product.imageUrl,
+      }));
+
+      setCart(items);
+    } catch (err) {
+      console.error("Error fetching cart:", err);
+    }
+  };
+
+  fetchCart();
+}, []);
+// ...existing code...
 
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(500);
   const [message, setMessage] = useState("");
 
-  // Function to update quantity and auto-remove if 0
+  // ✅ Quantity update
   const updateQuantity = (id, action) => {
-    setCartItems((prevItems) =>
-      prevItems
+    setCart((prev) =>
+      prev
         .map((item) =>
           item.id === id
             ? {
                 ...item,
-                quantity:
-                  action === "increase"
-                    ? item.quantity + 1
-                    : item.quantity - 1, // Decrease normally
+                quantity: action === "increase" ? item.quantity + 1 : item.quantity - 1,
               }
             : item
         )
-        .filter((item) => item.quantity > 0) // Remove items with quantity <= 0
+        .filter((item) => item.quantity > 0)
     );
   };
 
-  // Function to remove item manually
+  // ✅ Remove item
   const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+    setCart(cart.filter((item) => item.id !== id));
   };
 
-  // Calculate total price
-  const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  // ✅ Total from cart
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  // Apply coupon logic
+  // ✅ Coupon
   const applyCoupon = () => {
     if (coupon.trim().toUpperCase() === "NISH1000") {
       setDiscount(1000);
@@ -92,11 +86,11 @@ export default function Cart() {
         {/* Left Side - Cart Items */}
         <div className="lg:col-span-2 bg-white shadow-lg rounded-xl p-4">
           <h1 className="text-2xl font-bold border-b pb-4 mb-4 text-gray-800">
-            My Cart ({cartItems.length})
+            My Cart ({cart.length})
           </h1>
 
-          {cartItems.length > 0 ? (
-            cartItems.map((item) => (
+          {cart.length > 0 ? (
+            cart.map((item) => (
               <div
                 key={item.id}
                 className="flex items-center justify-between border-b py-4 hover:bg-gray-50 transition"
@@ -104,14 +98,12 @@ export default function Cart() {
                 {/* Product Info */}
                 <div className="flex items-center gap-4">
                   <img
-                    src={item.image}
+                    src={item.imageUrl}
                     alt={item.name}
                     className="w-24 h-24 rounded-lg border"
                   />
                   <div>
-                    <h2 className="font-semibold text-lg text-gray-800">
-                      {item.name}
-                    </h2>
+                    <h2 className="font-semibold text-lg text-gray-800">{item.name}</h2>
                     <p className="text-blue-600 font-bold">₹{item.price}</p>
                     <button
                       onClick={() => removeItem(item.id)}
@@ -141,20 +133,16 @@ export default function Cart() {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500 text-lg py-6">
-              Your cart is empty 😢
-            </p>
+            <p className="text-center text-gray-500 text-lg py-6">Your cart is empty 😢</p>
           )}
         </div>
 
         {/* Right Side - Price Summary */}
         <div className="bg-white shadow-lg rounded-xl p-4 h-fit sticky top-6">
-          <h2 className="text-xl font-bold border-b pb-3 mb-4 text-gray-800">
-            Price Details
-          </h2>
+          <h2 className="text-xl font-bold border-b pb-3 mb-4 text-gray-800">Price Details</h2>
           <div className="space-y-3 text-gray-700">
             <div className="flex justify-between">
-              <span>Price ({cartItems.length} items)</span>
+              <span>Price ({cart.length} items)</span>
               <span>₹{total}</span>
             </div>
             <div className="flex justify-between">
@@ -200,7 +188,6 @@ export default function Cart() {
           {/* Checkout Button */}
           <button className="mt-6 w-full bg-orange-500 text-white py-3 rounded-lg text-lg font-semibold hover:bg-orange-600 transition">
             <Link to="/checkout">Place Order</Link>
-            
           </button>
         </div>
       </div>
