@@ -6,7 +6,6 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
 
-// Helper for joining classes safely
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -22,6 +21,11 @@ export default function HomeSectionCard({ product }) {
     )
   }
 
+  // Map backend fields to UI expected fields
+  const imageSrc = product.imageUrl
+  const name = product.title
+  const price = product.discountedPrice || product.price
+
   return (
     <>
       {/* Product Card */}
@@ -32,8 +36,8 @@ export default function HomeSectionCard({ product }) {
         {/* Product Image */}
         <div className="overflow-hidden rounded-xl">
           <img
-            alt={product.imageAlt || product.name}
-            src={product.imageSrc}
+            alt={name}
+            src={imageSrc}
             className="aspect-square w-full object-cover transform transition-transform duration-300 group-hover:scale-105"
           />
         </div>
@@ -42,11 +46,12 @@ export default function HomeSectionCard({ product }) {
         <div className="mt-4 flex justify-between items-start">
           <div>
             <h3 className="text-base font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
-              {product.name}
+              {name}
             </h3>
             <p className="mt-1 text-sm text-gray-500">{product.color || ''}</p>
+            <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
           </div>
-          <p className="text-base font-bold text-indigo-600">{product.price}</p>
+          <p className="text-base font-bold text-indigo-600">₹{price}</p>
         </div>
 
         {/* Quick Overview Button */}
@@ -81,17 +86,15 @@ export default function HomeSectionCard({ product }) {
 
                 {/* Product Image */}
                 <img
-                  alt={product.imageAlt || product.name}
-                  src={product.imageSrc}
+                  alt={name}
+                  src={imageSrc}
                   className="aspect-2/3 w-full rounded-lg bg-gray-100 object-cover md:w-1/2"
                 />
 
                 {/* Product Details */}
                 <div className="flex w-full flex-col md:w-1/2 gap-4">
-                  <h2 className="text-2xl font-bold text-gray-900">{product.name}</h2>
-
-                  {/* Price */}
-                  <p className="text-2xl text-gray-900">{product.price}</p>
+                  <h2 className="text-2xl font-bold text-gray-900">{name}</h2>
+                  <p className="text-2xl text-gray-900">₹{price}</p>
 
                   {/* Ratings */}
                   <div className="flex items-center gap-2">
@@ -99,30 +102,17 @@ export default function HomeSectionCard({ product }) {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          product.rating > rating ? 'text-yellow-500' : 'text-gray-300',
+                          (product.rating || 0) > rating ? 'text-yellow-500' : 'text-gray-300',
                           'h-5 w-5'
                         )}
                       />
                     ))}
-                    {product.reviewCount && (
+                    {product.numberOfRatings > 0 && (
                       <span className="ml-2 text-sm font-medium text-indigo-600">
-                        {product.reviewCount} reviews
+                        {product.numberOfRatings} ratings
                       </span>
                     )}
                   </div>
-
-                  {/* Colors */}
-                  {product.colors?.length > 0 && (
-                    <div className="flex items-center gap-2">
-                      {product.colors.map((color) => (
-                        <div
-                          key={color.id}
-                          className="h-6 w-6 rounded-full border border-gray-300"
-                          style={{ backgroundColor: color.hex }}
-                        />
-                      ))}
-                    </div>
-                  )}
 
                   {/* Buttons */}
                   <div className="flex flex-col gap-3 mt-4">

@@ -11,34 +11,42 @@ useEffect(() => {
 const user = JSON.parse(localStorage.getItem("User"));
 
 const token = localStorage.getItem("token");
-if(!user ){
-  console.log("No user ");
-  
-}
-if(!token) console.log("No token");
-console.log(user);
-const userId = user.id;
+      if (!user) {
+        console.log("No user");
+        return;
+      }
+      if (!token) {
+        console.log("No token");
+        return;
+      }
 
-    try {
-      const res = await axios.get(`http://localhost:8081/usercart/${userId}`);
+      console.log("User:", user);
 
-      // Flatten product info for each cart item
-      const items = (res.data.cartItems || []).map((item) => ({
-        id: item.id,
-        name: item.product.title,
-        price: item.product.price,
-        quantity: item.quantity,
-        imageUrl: item.product.imageUrl,
-      }));
+      const userId = user.id;
 
-      setCart(items);
-    } catch (err) {
-      console.error("Error fetching cart:", err);
-    }
-  };
+      try {
+        const res = await axios.get(`http://localhost:8081/usercart/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // ✅ Attach JWT here
+          },
+        });
 
-  fetchCart();
-}, []);
+        const items = (res.data.cartItems || []).map((item) => ({
+          id: item.id,
+          name: item.product.title,
+          price: item.product.price,
+          quantity: item.quantity,
+          imageUrl: item.product.imageUrl,
+        }));
+
+        setCart(items);
+      } catch (err) {
+        console.error("Error fetching cart:", err.response?.data || err.message);
+      }
+    };
+
+    fetchCart();
+  }, []);
 // ...existing code...
 
   const [coupon, setCoupon] = useState("");

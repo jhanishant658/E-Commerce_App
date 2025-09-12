@@ -17,7 +17,7 @@ export default function Signin() {
       });
 
       // JWT token save karna
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.jwt);
      localStorage.setItem("User", JSON.stringify(res.data.user));
 
       // ✅ Navigate to homepage after login

@@ -7,6 +7,9 @@ import CheckOut from './Customer/Components/CheckOut/CheckOut';
 import Order from './Customer/Components/Order/Order';
 import ProductDescription from './Customer/Components/ProductDescription/ProductDescription';
 import HomePage from './Customer/Pages/HomePage';
+import AdminLogin from './Admin/Components/AdminLogin';
+import AdminHomePage from './Admin/Components/AdminHomePage';
+import AddProduct from    './Admin/Components/AddProduct';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -21,8 +24,11 @@ function App() {
         <Route path='/cart' element = {<Cart/>}></Route>
         <Route path='/checkout' element = {<CheckOut/>}></Route>
         <Route path='/order' element = {<Order/>}></Route>
+        <Route path ="/stores" element ={<AdminLogin/>}></Route> 
+        <Route path ="/admin/dashboard" element ={<AdminHomePage/>}></Route>
+        <Route path ="/createproduct" element ={<AddProduct/>}></Route>
       </Routes>
-    </Router>
+    </Router>  
   );
 }
 

@@ -1,124 +1,43 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import HomeSectionCard from '../HomeSectionCards/HomeSectionCard';
 import { Button } from '@mui/material';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-
-const products = [
-  {
-    id: 1,
-    product_type: 't-shirt',
-    name: 'Earthen Bottle',
-    href: '#',
-    price: '$48',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-01.jpg',
-    imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-    color: 'White',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 4,
-  },
-  {
-    id: 2,
-    product_type: 't-shirt',
-    name: 'Nomad Tumbler',
-    href: '#',
-    price: '$35',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-02.jpg',
-    imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-    color: 'Green',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 4,
-  },
-  {
-    id: 3,
-    product_type: 't-shirt',
-    name: 'Focus Paper Refill',
-    href: '#',
-    price: '$89',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-03.jpg',
-    imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-    color: 'White',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 5,
-  },
-  {
-    id: 4,
-    product_type: 't-shirt',
-    name: 'Machined Mechanical Pencil',
-    href: '#',
-    price: '$35',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt:
-      'Hand holding black machined steel mechanical pencil with brass tip and top.',
-    color: 'Black',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 4,
-  },
-  {
-    id: 5,
-    product_type: 't-shirt',
-    name: 'Focus Card Tray',
-    href: '#',
-    price: '$64',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-05.jpg',
-    imageAlt: 'Paper card sitting upright in walnut card holder on desk.',
-    color: 'Brown',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 4,
-  },
-  {
-    id: 6,
-    product_type: 't-shirt',
-    name: 'Focus Multi-Pack',
-    href: '#',
-    price: '$39',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-06.jpg',
-    imageAlt:
-      'Stack of 3 small drab green cardboard paper card refill boxes with white text.',
-    color: 'Green',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 5,
-  },
-  {
-    id: 7,
-    product_type: 't-shirt',
-    name: 'Brass Scissors',
-    href: '#',
-    price: '$50',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-07.jpg',
-    imageAlt:
-      'Brass scissors with geometric design, black steel finger holes, and included upright brass stand.',
-    color: 'Brass',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 3,
-  },
-  {
-    id: 8,
-    product_type: 't-shirt',
-    name: 'Focus Carry Pouch',
-    href: '#',
-    price: '$32',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-08.jpg',
-    imageAlt:
-      'Textured gray felt pouch for paper cards with snap button flap and elastic pen holder loop.',
-    color: 'Gray',
-    Description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quia, nulla!',
-    rating: 4,
-  },
-];
+import axios from 'axios';
 
 export default function HomeSectionCarousel({ sectionName }) {
+  const [products, setProducts] = useState([]);
   const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchProductByCategory = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.log("No token found");
+        return;
+      }
+
+      try {
+        const res = await axios.get(
+          `http://localhost:8081/products/category/${sectionName}`, 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("Fetched Products:", res.data); // 👀 check response in console
+        setProducts(res.data);
+      } catch (err) {
+        console.error("Error fetching products:", err.response?.data || err.message);
+      }
+    };
+
+    fetchProductByCategory();
+  }, [sectionName]);
 
   const slidePrev = () => carouselRef.current?.slidePrev();
   const slideNext = () => carouselRef.current?.slideNext();
@@ -152,7 +71,6 @@ export default function HomeSectionCarousel({ sectionName }) {
         disableDotsControls
         activeIndex={activeIndex}
         onSlideChanged={(e) => setActiveIndex(e.item)}
-        
         infinite
       />
 
