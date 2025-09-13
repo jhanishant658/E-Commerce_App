@@ -1,5 +1,6 @@
 package com.example.E_Commerce.Services;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,8 @@ public class CartService {
         cartItem.setCart(cart);
         cartItem.setQuantity(req.getQuantity());
         cartItem.setUserId(userId);
-        cartItem.setPrice(req.getQuantity()*product.getDiscountedPrice());
+       cartItem.setPrice(product.getPrice()*req.getQuantity());
+       cartItem.setDiscountedPrice(req.getQuantity()*product.getDiscountedPrice());
         cartItem.setSize(req.getSize());
         CartItem createdCartItem=cartItemService.createCartItem(cartItem);
         cart.getCartItems().add(createdCartItem);
@@ -52,23 +54,33 @@ public class CartService {
       int totalDiscount =0 ;
       int totalItem =0 ; 
       for(CartItem cartItem:cart.getCartItems()){
-        totalPrice+=cartItem.getPrice();
-        totalDiscount+=cartItem.getDiscountedPrice();
+       totalPrice += cartItem.getPrice();              // MRP total
+      totalDiscount += (cartItem.getPrice() - cartItem.getDiscountedPrice()); // actual discount
+    
         totalItem += cartItem.getQuantity();
 
       }
       cart.setTotalDiscount(totalDiscount);
       cart.setTotalItems(totalItem);
       cart.setTotalPrice(totalPrice);
-      cart.setDiscountedPrice(totalPrice-totalDiscount);
+      cart.setDiscountedPrice(totalPrice - totalDiscount); // Net payable amount
       return cartRepository.save(cart) ; 
     }
-    public void deleteCartItem(Long userId){
-      Cart cart = cartRepository.findByUserId(userId) ; 
-      Set<CartItem> cartItems = cart.getCartItems();
-      for(CartItem cartItem :cartItems){
+ public void deleteCartItem(Long userId) {
+    Cart cart = cartRepository.findByUserId(userId);
+
+    // cartItems ka ek copy banao (ye normal HashSet hai, Hibernate ka proxy nahi)
+    Set<CartItem> cartItemsCopy = new HashSet<>(cart.getCartItems());
+
+    // Ab safe iteration karo
+    for (CartItem cartItem : cartItemsCopy) {
         cartItemService.removeCartItem(userId, cartItem.getId());
-      }
-      
     }
+
+    // Optional: cart ko clear bhi kar do, taki Hibernate ka state sync rahe
+    cart.getCartItems().clear();
+    cartRepository.save(cart);
+}
+
+
 }

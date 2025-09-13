@@ -3,19 +3,13 @@ package com.example.E_Commerce.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.E_Commerce.Models.Address;
 import com.example.E_Commerce.Models.Order;
 import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Services.OrderService;
 import com.example.E_Commerce.Services.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
 
 
 @RestController
@@ -46,5 +40,8 @@ public class OrderController {
     public Order updateOrderStatus(@PathVariable Long orderId ,@PathVariable String OrderStatus){
         return orderService.updateOrderStatus(orderId, OrderStatus);
     }
-
+    @DeleteMapping("/cancelOrder/{orderid}")
+    public void  cancelOrder( @PathVariable Long  orderid){
+         orderService.CancelOrder(orderid);
+    }
 }

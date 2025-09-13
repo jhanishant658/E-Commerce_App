@@ -30,49 +30,62 @@ public class OrderService {
    @Autowired
    private AddressRepository addressRepository;
     // Place an order for a user
-    public Order placeOrder(User user, Address shippingAddress) {
-        Cart cart = cartRepository.findByUserId(user.getId());
-        if (cart == null || cart.getCartItems().isEmpty()) {
-            throw new IllegalStateException("Cart is empty");
-        }
-
-        Order order = new Order();
-        order.setUser(user);
-        Address savedAddress = addressRepository.save(shippingAddress);
-         order.setShippingAddress(savedAddress);
-      List<OrderItem> orderItems = cart.getCartItems()
-        .stream()
-        .map(cartItem -> {
-            OrderItem orderItem = new OrderItem();
-            orderItem.setProduct(cartItem.getProduct());
-            orderItem.setSize(cartItem.getSize());
-            orderItem.setQuantity(cartItem.getQuantity());
-            orderItem.setPrice(cartItem.getPrice());
-            orderItem.setDiscountedPrice(cartItem.getDiscountedPrice());
-            orderItem.setDeliveryDate(LocalDateTime.now().plusWeeks(1));
-            orderItem.setUserId((long) cartItem.getUserId()); // cast if userId is double in CartItem
-            orderItem.setOrder(order); // important for mapping
-            return orderItem;
-        })
-        .collect(Collectors.toList());
-
-order.setOrderItems(orderItems);
-
-        order.setTotalAmount(cart.getTotalPrice());
-        order.setOrderstatus("PLACED");
-    order.setDeliveryDate(LocalDateTime.now().plusWeeks(1));
- order.setOrderDate(LocalDateTime.now());
- order.setTotalItems(cart.getTotalItems());
- String orderId = UUID.randomUUID().toString();
-order.setOrderId(orderId);
- order.setTotalDiscount(cart.getTotalDiscount());
-        Order savedOrder = orderRepository.save(order);
-
-        // Clear cart after placing order
-        cartService.deleteCartItem(user.getId());
-
-        return savedOrder;
+  public Order placeOrder(User user, Address shippingAddress) {
+    Cart cart = cartRepository.findByUserId(user.getId());
+    if (cart == null || cart.getCartItems().isEmpty()) {
+        throw new IllegalStateException("Cart is empty");
     }
+
+    Order order = new Order();
+    order.setUser(user);
+    Address savedAddress = addressRepository.save(shippingAddress);
+    order.setShippingAddress(savedAddress);
+
+    List<OrderItem> orderItems = cart.getCartItems()
+            .stream()
+            .map(cartItem -> {
+                OrderItem orderItem = new OrderItem();
+                orderItem.setProduct(cartItem.getProduct());
+                orderItem.setSize(cartItem.getSize());
+                orderItem.setQuantity(cartItem.getQuantity());
+                orderItem.setPrice(cartItem.getPrice());
+                orderItem.setDiscountedPrice(cartItem.getDiscountedPrice());
+                orderItem.setDeliveryDate(LocalDateTime.now().plusWeeks(1));
+                orderItem.setUserId((long) cartItem.getUserId());
+                orderItem.setOrder(order);
+                return orderItem;
+            })
+            .collect(Collectors.toList());
+
+    order.setOrderItems(orderItems);
+
+    // ✅ Fresh Calculation Here
+    double totalAmount = cart.getCartItems().stream()
+            .mapToDouble(item -> item.getPrice())
+            .sum();
+
+    int totalItems = cart.getCartItems().stream()
+            .mapToInt(item -> item.getQuantity())
+            .sum();
+
+    double totalDiscount = cart.getCartItems().stream()
+            .mapToDouble(item -> item.getPrice() - item.getDiscountedPrice())
+            .sum();
+
+    order.setTotalAmount(totalAmount);
+    order.setTotalItems(totalItems);
+    order.setTotalDiscount((int)totalDiscount);
+    order.setOrderstatus("PLACED");
+    order.setDeliveryDate(LocalDateTime.now().plusWeeks(1));
+    order.setOrderDate(LocalDateTime.now());
+    order.setOrderId(UUID.randomUUID().toString());
+    order.setCreatedAt(LocalDateTime.now());
+
+    Order savedOrder = orderRepository.save(order);
+    cartService.deleteCartItem(user.getId());
+    return savedOrder;
+}
+
 
     // Admin: Get all orders
     public List<Order> getAllOrders() {
@@ -95,5 +108,9 @@ order.setOrderId(orderId);
         Order order = getOrderById(orderId);
         order.setOrderstatus(status);
         return orderRepository.save(order);
+    }
+    public void CancelOrder(Long orderId){
+        orderRepository.delete(getOrderById(orderId));
+        return ;
     }
 }

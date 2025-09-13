@@ -7,7 +7,9 @@ export default function Order() {
   return (
     <div>
     <Navigation/>
+    <div className='mt-20'>
       <OrdersPage/>
+      </div>
       <Footer/>
     </div>
   )

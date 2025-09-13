@@ -1,5 +1,4 @@
 package com.example.E_Commerce.Controllers;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +17,12 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+
  @PostMapping("/signup")
     public ResponseEntity<AuthResponse> registerUser(@RequestBody User user) {
         // Registration logic here
-        return  userService.registerUser(user);
+       return   userService.registerUser(user);
+
     }
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> loginUser(@RequestBody LoginRequest loginRequest) {
