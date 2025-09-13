@@ -31,6 +31,9 @@ public class CartService {
     public String addCartItem(Long userId , AddItemRequest
     req){
       Cart cart = cartRepository.findByUserId(userId);
+      if(cart==null){
+        cart = createCart(new UserService().findById(userId));
+      }
       Product product = productService.getProductById(req.getProductId());
       CartItem isPresent = cartItemService.isCartItemExists(cart, product, req.getSize(), userId);
       if(isPresent==null){
