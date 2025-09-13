@@ -3,11 +3,12 @@ package com.example.E_Commerce.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.E_Commerce.Models.Address;
 import com.example.E_Commerce.Models.Order;
 import com.example.E_Commerce.Models.User;
+import com.example.E_Commerce.Response.OrderResponse;
 import com.example.E_Commerce.Services.OrderService;
 import com.example.E_Commerce.Services.UserService;
 
@@ -20,16 +21,16 @@ public class OrderController {
     @Autowired
     private UserService userService ; 
     @PostMapping("/{userId}")
-    public Order placeOrder(@PathVariable Long userId , @RequestBody Address shippingAddress){
+    public ResponseEntity<OrderResponse> placeOrder(@PathVariable Long userId , @RequestBody Address shippingAddress){
        User user = userService.getUserById(userId);
          return orderService.placeOrder(user, shippingAddress);
     }
     @GetMapping("/getAllOrder")
-    public List<Order> getAllOrders(){
+    public List<OrderResponse> getAllOrders(){
         return orderService.getAllOrders();
     }
     @GetMapping("/orderhistory/{userId}")
-    public List<Order> orderHistory(@PathVariable Long userId){
+    public List<OrderResponse> orderHistory(@PathVariable Long userId){
         return orderService.getOrdersByUser(userService.getUserById(userId));
     }
     @GetMapping("orderDetail/{orderId}")

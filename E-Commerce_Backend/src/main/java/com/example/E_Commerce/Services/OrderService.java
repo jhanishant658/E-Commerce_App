@@ -1,19 +1,22 @@
 package com.example.E_Commerce.Services;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.E_Commerce.Models.Address;
 import com.example.E_Commerce.Models.Order;
 import com.example.E_Commerce.Models.OrderItem;
+import com.example.E_Commerce.Models.Product;
 import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Models.Cart;
 import com.example.E_Commerce.Repositories.AddressRepository;
 import com.example.E_Commerce.Repositories.CartRepository;
 import com.example.E_Commerce.Repositories.OrderRepository;
+import com.example.E_Commerce.Response.OrderResponse;
 
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,12 +33,12 @@ public class OrderService {
    @Autowired
    private AddressRepository addressRepository;
     // Place an order for a user
-  public  Order placeOrder(User user, Address shippingAddress) {
+  public  ResponseEntity<OrderResponse> placeOrder(User user, Address shippingAddress) {
     Cart cart = cartRepository.findByUserId(user.getId());
     if (cart == null || cart.getCartItems().isEmpty()) {
         throw new IllegalStateException("Cart is empty");
     }
-
+ List<Product> product = new ArrayList<>();
     Order order = new Order();
     order.setUser(user);
     Address savedAddress = addressRepository.save(shippingAddress);
@@ -46,6 +49,7 @@ public class OrderService {
             .map(cartItem -> {
                 OrderItem orderItem = new OrderItem();
                 orderItem.setProduct(cartItem.getProduct());
+                product.add(cartItem.getProduct());
                 orderItem.setSize(cartItem.getSize());
                 orderItem.setQuantity(cartItem.getQuantity());
                 orderItem.setPrice(cartItem.getPrice());
@@ -83,18 +87,59 @@ public class OrderService {
 
     Order savedOrder = orderRepository.save(order);
     cartService.deleteCartItem(user.getId());
-    return savedOrder;
+    OrderResponse orderResponse = new OrderResponse();
+    orderResponse.setOrder(savedOrder);
+    orderResponse.setProduct(product);
+    return ResponseEntity.ok(orderResponse);
 }
 
 
     // Admin: Get all orders
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
+    // Admin: Get all orders
+public List<OrderResponse> getAllOrders() {
+    List<Order> orders = orderRepository.findAll();
+
+    List<OrderResponse> orderResponses = orders.stream()
+        .map(order -> {
+            OrderResponse response = new OrderResponse();
+            response.setOrder(order);
+
+            // ✅ Products extract from orderItems
+            List<Product> products = order.getOrderItems()
+                .stream()
+                .map(OrderItem::getProduct)
+                .collect(Collectors.toList());
+
+            response.setProduct(products);
+            return response;
+        })
+        .collect(Collectors.toList());
+
+    return orderResponses;
+}
+
 
     // User: Get orders by user
-    public List<Order> getOrdersByUser(User user) {
-        return orderRepository.findByUser(user);
+    public List<OrderResponse> getOrdersByUser(User user) {
+        List<Order> orders =  orderRepository.findByUser(user);
+        List<OrderResponse> orderResponses = orders.stream()
+        .map(order -> {
+            OrderResponse response = new OrderResponse();
+            response.setOrder(order);
+
+            // ✅ Products extract from orderItems
+            List<Product> products = order.getOrderItems()
+                .stream()
+                .map(OrderItem::getProduct)
+                .collect(Collectors.toList());
+
+            response.setProduct(products);
+            return response;
+        })
+        .collect(Collectors.toList());
+
+    return orderResponses;
+
     }
 
     // Get order by ID (for details)
