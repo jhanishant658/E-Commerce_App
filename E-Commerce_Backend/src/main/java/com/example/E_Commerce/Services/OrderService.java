@@ -30,7 +30,7 @@ public class OrderService {
    @Autowired
    private AddressRepository addressRepository;
     // Place an order for a user
-  public Order placeOrder(User user, Address shippingAddress) {
+  public  Order placeOrder(User user, Address shippingAddress) {
     Cart cart = cartRepository.findByUserId(user.getId());
     if (cart == null || cart.getCartItems().isEmpty()) {
         throw new IllegalStateException("Cart is empty");
