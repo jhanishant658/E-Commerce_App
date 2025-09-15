@@ -155,7 +155,7 @@ const token = localStorage.getItem("token");
             </div>
             <div className="flex justify-between">
               <span>Discount</span>
-              <span className="text-green-600">-₹{discount}</span>
+              <span className="text-green-600">₹{discount}</span>
             </div>
             <div className="flex justify-between">
               <span>Delivery Charges</span>

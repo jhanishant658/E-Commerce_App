@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <>
       <Navigation/>
-         <div className='MainCarosals mt-5 m-5 '>
+         <div className='MainCarosals mt-36 m-5 '>
       <MainCarosals />
     </div>
       <PromoSection/>

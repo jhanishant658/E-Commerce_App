@@ -3,37 +3,17 @@ import React, { useState } from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 export default function DeliveryAddressForm() {
-  const [savedAddresses, setSavedAddresses] = useState([
-    {
-      id: 1,
-      firstName: "Nishant",
-      lastName: "Jha",
-      address: "123 MG Road, Bangalore, Karnataka",
-      pincode: "560001",
-      phone: "9876543210",
-      landmark: "Near Metro Station",
-      notes: "Ring the bell twice",
-    },
-    {
-      id: 2,
-      firstName: "Ravi",
-      lastName: "Kumar",
-      address: "45 IT Park, Pune, Maharashtra",
-      pincode: "411001",
-      phone: "9876501234",
-      landmark: "Opposite Cafe Coffee Day",
-      notes: "Call before delivery",
-    },
-  ]);
-
+  const [savedAddresses, setSavedAddresses] = useState([]);
   const [newAddress, setNewAddress] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
-    pincode: "",
-    phone: "",
-    landmark: "",
-    notes: "",
+    firstname: "",
+    lastname: "",
+    streetaddress: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+    mobile: "",
+    userId: 1, // hardcoded for now, later from logged-in user
   });
 
   const navigate = useNavigate();
@@ -43,28 +23,38 @@ export default function DeliveryAddressForm() {
     setNewAddress((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddAddress = () => {
-    const { firstName, lastName, address, pincode, phone } = newAddress;
-    if (!firstName || !lastName || !address || !pincode || !phone) {
+  const handleSaveAddress = () => {
+    const { firstname, lastname, streetaddress, city, state, zipcode, country, mobile } =
+      newAddress;
+
+    if (!firstname || !lastname || !streetaddress || !city || !state || !zipcode || !country || !mobile) {
       alert("Please fill in all required fields.");
       return;
     }
-    setSavedAddresses([
-      ...savedAddresses,
-      { id: savedAddresses.length + 1, ...newAddress },
-    ]);
+
+    // Add to local state only
+    setSavedAddresses([...savedAddresses, newAddress]);
+
+    // Reset form
     setNewAddress({
-      firstName: "",
-      lastName: "",
-      address: "",
-      pincode: "",
-      phone: "",
-      landmark: "",
-      notes: "",
+      firstname: "",
+      lastname: "",
+      streetaddress: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      country: "",
+      mobile: "",
+      userId: 1,
     });
+
+    alert("Address saved successfully ✅");
   };
 
   const handleDeliverHere = (address) => {
+    // Save selected address in localStorage ONLY on Deliver Here
+    localStorage.setItem("selectedAddress", JSON.stringify(address));
+    console.log("Selected Address:", address);
     navigate("/checkout?step=2", { state: { selectedAddress: address } });
   };
 
@@ -78,24 +68,26 @@ export default function DeliveryAddressForm() {
         {savedAddresses.length === 0 ? (
           <p className="text-gray-500">No saved addresses.</p>
         ) : (
-          savedAddresses.map((addr) => (
+          savedAddresses.map((addr, index) => (
             <div
-              key={addr.id}
+              key={index}
               className="flex flex-col border rounded-xl p-4 mb-4 shadow-sm hover:shadow-md transition"
             >
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-semibold text-gray-900 text-lg">
-                    {addr.firstName} {addr.lastName}
+                    {addr.firstname} {addr.lastname}
                   </h3>
-                  <p className="text-gray-700">{addr.address} - {addr.pincode}</p>
-                  <p className="text-gray-700">Phone: {addr.phone}</p>
-                  {addr.landmark && <p className="text-gray-500">Landmark: {addr.landmark}</p>}
-                  {addr.notes && <p className="text-gray-500">Notes: {addr.notes}</p>}
+                  <p className="text-gray-700">
+                    {addr.streetaddress}, {addr.city}, {addr.state} - {addr.zipcode}
+                  </p>
+                  <p className="text-gray-700">
+                    {addr.country} | Phone: {addr.mobile}
+                  </p>
                 </div>
                 <button
                   onClick={() =>
-                    setSavedAddresses(savedAddresses.filter((a) => a.id !== addr.id))
+                    setSavedAddresses(savedAddresses.filter((_, i) => i !== index))
                   }
                   className="text-red-500 hover:text-red-600 ml-2 p-2 rounded-full transition"
                   title="Delete Address"
@@ -123,67 +115,76 @@ export default function DeliveryAddressForm() {
           <div className="flex gap-3">
             <input
               type="text"
-              name="firstName"
+              name="firstname"
               placeholder="First Name"
-              value={newAddress.firstName}
+              value={newAddress.firstname}
               onChange={handleInputChange}
               className="border w-1/2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             />
             <input
               type="text"
-              name="lastName"
+              name="lastname"
               placeholder="Last Name"
-              value={newAddress.lastName}
+              value={newAddress.lastname}
               onChange={handleInputChange}
               className="border w-1/2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             />
           </div>
-          <textarea
-            name="address"
-            placeholder="Full Address"
-            value={newAddress.address}
+          <input
+            type="text"
+            name="streetaddress"
+            placeholder="Street Address"
+            value={newAddress.streetaddress}
             onChange={handleInputChange}
             className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
-            rows="3"
-          ></textarea>
+          />
           <div className="flex gap-3">
             <input
               type="text"
-              name="pincode"
-              placeholder="Pincode"
-              value={newAddress.pincode}
+              name="city"
+              placeholder="City"
+              value={newAddress.city}
               onChange={handleInputChange}
-              className="border w-1/2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
+              className="border w-1/3 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             />
             <input
               type="text"
-              name="phone"
-              placeholder="Phone Number"
-              value={newAddress.phone}
+              name="state"
+              placeholder="State"
+              value={newAddress.state}
               onChange={handleInputChange}
-              className="border w-1/2 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
+              className="border w-1/3 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
+            />
+            <input
+              type="text"
+              name="zipcode"
+              placeholder="Zip Code"
+              value={newAddress.zipcode}
+              onChange={handleInputChange}
+              className="border w-1/3 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
             />
           </div>
           <input
             type="text"
-            name="landmark"
-            placeholder="Landmark (Optional)"
-            value={newAddress.landmark}
+            name="country"
+            placeholder="Country"
+            value={newAddress.country}
             onChange={handleInputChange}
             className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
           />
           <input
             type="text"
-            name="notes"
-            placeholder="Delivery Notes (Optional)"
-            value={newAddress.notes}
+            name="mobile"
+            placeholder="Mobile"
+            value={newAddress.mobile}
             onChange={handleInputChange}
             className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
           />
+
           <div className="flex gap-3 mt-2">
             <button
               className="bg-blue-500 text-white w-1/2 py-3 rounded-lg hover:bg-blue-600 font-semibold shadow-md transition"
-              onClick={handleAddAddress}
+              onClick={handleSaveAddress}
             >
               Save Address
             </button>

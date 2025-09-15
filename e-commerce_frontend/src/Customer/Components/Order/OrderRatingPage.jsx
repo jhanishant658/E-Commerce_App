@@ -4,7 +4,6 @@ import StarIcon from "@mui/icons-material/Star";
 
 export default function OrderRating({ orderId, savedRatings, setSavedRatings }) {
   const existingRating = savedRatings[orderId] || null;
-
   const [ratingValue, setRatingValue] = useState(0);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(!!existingRating);
@@ -26,7 +25,6 @@ export default function OrderRating({ orderId, savedRatings, setSavedRatings }) 
       alert("Please give a rating!");
       return;
     }
-
     setSavedRatings((prev) => ({
       ...prev,
       [orderId]: { rating: ratingValue, review },
@@ -43,9 +41,7 @@ export default function OrderRating({ orderId, savedRatings, setSavedRatings }) 
             {[1, 2, 3, 4, 5].map((star) => (
               <StarIcon
                 key={star}
-                className={`cursor-pointer ${
-                  star <= ratingValue ? "text-yellow-400" : "text-gray-300"
-                }`}
+                className={`cursor-pointer ${star <= ratingValue ? "text-yellow-400" : "text-gray-300"}`}
                 onClick={() => setRatingValue(star)}
               />
             ))}
@@ -68,9 +64,7 @@ export default function OrderRating({ orderId, savedRatings, setSavedRatings }) 
             {[1, 2, 3, 4, 5].map((star) => (
               <StarIcon
                 key={star}
-                className={`${
-                  star <= ratingValue ? "text-yellow-400" : "text-gray-300"
-                }`}
+                className={`${star <= ratingValue ? "text-yellow-400" : "text-gray-300"}`}
               />
             ))}
           </Box>

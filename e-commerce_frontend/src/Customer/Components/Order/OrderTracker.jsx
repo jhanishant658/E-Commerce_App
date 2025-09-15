@@ -10,23 +10,25 @@ const steps = ["Order Placed", "Packed", "Shipped", "Out for Delivery", "Deliver
 
 export default function OrderTracker({ status }) {
   const statusIndex = steps.findIndex((s) => s === status);
-  const [animatedStep, setAnimatedStep] = useState(0); // 0 se start
+  const [animatedStep, setAnimatedStep] = useState(0);
 
   useEffect(() => {
-    if (statusIndex < 0) return; // safety check
-    setAnimatedStep(0); // reset animation
+    if (statusIndex < 0) return;
     let currentStep = 0;
+    setAnimatedStep(0); // reset animation for new status
+
     const interval = setInterval(() => {
       if (currentStep > statusIndex) {
         clearInterval(interval);
-        setAnimatedStep(statusIndex); // settle on actual status
+        setAnimatedStep(statusIndex); // final step
       } else {
         setAnimatedStep(currentStep);
         currentStep++;
       }
-    }, 500); // animation speed
-    return () => clearInterval(interval);
-  }, [statusIndex]);
+    }, 500);
+
+    return () => clearInterval(interval); // cleanup on unmount / status change
+  }, [statusIndex]); // depend only on current status
 
   return (
     <Box className="bg-white shadow-md rounded-xl p-6 w-full">
@@ -39,7 +41,7 @@ export default function OrderTracker({ status }) {
           <Step key={label}>
             <StepLabel
               icon={
-                index <= animatedStep ? ( // <= instead of < for current step tick
+                index <= animatedStep ? (
                   <CheckCircleIcon className="text-green-600" />
                 ) : (
                   <RadioButtonUncheckedIcon className="text-gray-400" />
@@ -48,9 +50,7 @@ export default function OrderTracker({ status }) {
             >
               <Typography
                 className={`${
-                  index <= animatedStep
-                    ? "text-gray-900 font-medium"
-                    : "text-gray-500"
+                  index <= animatedStep ? "text-gray-900 font-medium" : "text-gray-500"
                 } text-sm`}
               >
                 {label}

@@ -1,17 +1,54 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 export default function OrderSummary() {
   const location = useLocation();
   const navigate = useNavigate();
   const selectedAddress = location.state?.selectedAddress;
 
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Wireless Headphones", price: 2999, quantity: 1 },
-    { id: 2, name: "Smart Watch", price: 4999, quantity: 2 },
-    { id: 3, name: "Gaming Mouse", price: 1999, quantity: 1 },
-  ]);
+  const [cartItems, setCartItems] = useState([ ]);
+  useEffect(() => {
+    const fetchCart = async () => {
+  const user = JSON.parse(localStorage.getItem("User"));
+  
+  const token = localStorage.getItem("token");
+        if (!user) {
+          console.log("No user");
+          return;
+        }
+        if (!token) {
+          console.log("No token");
+          return;
+        }
+  
+        console.log("User:", user);
+  
+        const userId = user.id;
+  
+        try {
+          const res = await axios.get(`http://localhost:8081/usercart/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`, // ✅ Attach JWT here
+            },
+          });
+  
+          const items = (res.data.cartItems || []).map((item) => ({
+            id: item.id,
+            name: item.product.title,
+            price: item.product.price,
+            quantity: item.quantity,
+            imageUrl: item.product.imageUrl,
+          }));
+  
+          setCartItems(items);
+        } catch (err) {
+          console.error("Error fetching cart:", err.response?.data || err.message);
+        }
+      };
+  
+      fetchCart();
+    }, []);
 
   const updateQuantity = (id, type) => {
     setCartItems((prev) =>

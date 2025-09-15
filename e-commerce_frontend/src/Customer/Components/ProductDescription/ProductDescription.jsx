@@ -7,13 +7,17 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BoltIcon from "@mui/icons-material/Bolt";
 import Footer from "../Footer/Footer";
 import FAQPage from "../../Pages/FaqPage";
+import { toast } from "react-hot-toast";
 
 const ProductDescription = () => {
-  const { id } = useParams(); // 👈 route se id lo
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [adding, setAdding] = useState(false);
+   const user = JSON.parse(localStorage.getItem("User"));
+  const userId = user?.id;
 
-  // API call
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -27,6 +31,30 @@ const ProductDescription = () => {
     };
     fetchProduct();
   }, [id]);
+
+  const handleAddToCart = async () => {
+    if (!selectedSize) {
+      toast.error("Please select a size!");
+      return;
+    }
+
+    setAdding(true);
+    try {
+      const payload = {
+        productId: product.id,
+        size: selectedSize,
+        quantity: 1,
+      };
+
+      await axios.post(`http://localhost:8081/cartitem/${userId}`, payload);
+      toast.success("Item added to cart!");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add to cart!");
+    } finally {
+      setAdding(false);
+    }
+  };
 
   const renderStars = (count) => (
     <div className="flex items-center gap-1">
@@ -47,28 +75,33 @@ const ProductDescription = () => {
     <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Main Content */}
       <div className="flex flex-col md:flex-row flex-grow">
-        {/* Left side - Product Image with Buttons */}
-        <div className="md:w-1/2 h-screen sticky top-0 flex flex-col justify-center items-center bg-white shadow-lg p-4">
-          {/* Product Image */}
+        {/* Left side - Product Image */}
+        <div className="md:w-1/2 h-auto md:h-screen sticky top-0 flex flex-col justify-center items-center bg-white shadow-lg p-4">
           <img
             src={product.imageUrl}
             alt={product.title}
             className="object-contain max-h-[450px] w-auto rounded-lg mb-4"
           />
 
-          {/* Buttons below Image */}
-          <div className="flex gap-4 w-full px-4">
-            <button className="flex items-center justify-center gap-2 flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg text-lg font-semibold shadow-md transition">
-              <ShoppingCartIcon /> Add to Cart
+          {/* Buttons */}
+          <div className="flex flex-col md:flex-row gap-3 w-full px-4">
+            <button
+              onClick={handleAddToCart}
+              disabled={adding}
+              className="flex items-center justify-center gap-2 flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg text-lg font-semibold shadow-md transition disabled:opacity-50"
+            >
+              <ShoppingCartIcon /> {adding ? "Adding..." : "Add to Cart"}
             </button>
-            <button className="flex items-center justify-center gap-2 flex-1 bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg text-lg font-semibold shadow-md transition">
-              <BoltIcon />
-              <Link to="/checkout">Buy Now</Link>
-            </button>
+            <Link
+              to="/checkout"
+              className="flex items-center justify-center gap-2 flex-1 bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg text-lg font-semibold shadow-md transition text-center"
+            >
+              <BoltIcon /> Buy Now
+            </Link>
           </div>
         </div>
 
-        {/* Right side - Product Details & Reviews */}
+        {/* Right side - Product Details */}
         <div className="md:w-1/2 p-6 bg-white shadow-lg overflow-y-auto">
           {/* Product Header */}
           <div className="border-b border-gray-200 pb-4 mb-4">
@@ -90,8 +123,28 @@ const ProductDescription = () => {
           <p className="text-gray-700 leading-relaxed mb-6">
             {product.description}
           </p>
-          
-          {/* Reviews Section */}
+
+          {/* Sizes Section */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">Select Size</h3>
+            <div className="flex flex-wrap gap-2">
+              {product.sizes?.map((size) => (
+                <button
+                  key={size.name}
+                  onClick={() => setSelectedSize(size.name)}
+                  className={`px-4 py-2 rounded-lg border font-medium transition ${
+                    selectedSize === size.name
+                      ? "bg-yellow-500 text-white border-yellow-500"
+                      : "bg-gray-100 hover:bg-gray-200 border-gray-300"
+                  }`}
+                >
+                  {size.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Reviews */}
           <div className="border-t border-gray-300 pt-4 mb-8">
             <h2 className="text-xl font-semibold mb-4">Customer Reviews</h2>
             <div className="space-y-4">
@@ -116,8 +169,8 @@ const ProductDescription = () => {
                 <p className="text-gray-500">No reviews yet.</p>
               )}
               <div>
-            <FAQPage/>
-          </div>
+                <FAQPage />
+              </div>
             </div>
           </div>
         </div>

@@ -13,41 +13,45 @@ export default function OrdersPage() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        // User object localStorage se nikaal rahe hai
         const user = JSON.parse(localStorage.getItem("User"));
-        if (!user) return;
+        const userId = user?.id;
 
-        const token = localStorage.getItem("token");
+        const res = await axios.get(`http://localhost:8081/order/orderhistory/${userId}`);
 
-        const res = await axios.get(
-          `http://localhost:8081/order/orderhistory/${user.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // JWT token bhejna zaruri hai
-            },
-          }
-        );
+        const fetchedOrders = res.data.map((response) => {
+          const order = response.order;
 
-        const fetchedOrders = res.data.map((order) => ({
-          id: order.id,
-          status: order.orderstatus,
-          date: order.orderDate || order.createdAt,
-          total: order.totalAmount,
-          address: `${order.shippingAddress.streetaddress}, ${order.shippingAddress.city}`,
-          phone: order.shippingAddress.mobile,
-          items: order.orderItems.map((item) => ({
-            name: `Product ID: ${item.id}`, // TODO: agar product ka naam chahiye to backend me join karna hoga
-            price: item.price,
-            quantity: item.quantity,
-          })),
-        }));
+          const products = (response.product || []).map((prod, index) => {
+            const item = order.orderItems[index] || {};
+            return {
+              id: prod.id,
+              name: prod.title,
+              price: prod.price,
+              discountedPrice: prod.discountedPrice || prod.price,
+              size: item.size || "N/A",
+              quantity: item.quantity || 1,
+              image: prod.imageUrl || "/placeholder.jpg",
+            };
+          });
+
+          return {
+            orderId: order.orderId,
+            id: order.id,
+            status: order.orderstatus,
+            date: order.orderDate || order.createdAt,
+            total: order.totalAmount || 0,
+            discount: order.totalDiscount || 0,
+            address: order.shippingAddress
+              ? `${order.shippingAddress.streetaddress}, ${order.shippingAddress.city}, ${order.shippingAddress.state}, ${order.shippingAddress.zipcode}`
+              : "N/A",
+            phone: order.shippingAddress?.mobile || "N/A",
+            products: products,
+          };
+        });
 
         setOrders(fetchedOrders);
-        if (fetchedOrders.length > 0) {
-          setSelectedOrder(fetchedOrders[0]); // pehla order default select ho jaye
-        }
       } catch (error) {
-        console.error("Error fetching order history:", error);
+        console.error("Failed to fetch orders:", error);
       }
     };
 
@@ -55,8 +59,7 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <div className="flex gap-6 p-6">
-      {/* Order List */}
+    <div className="flex gap-6 p-6 max-w-7xl mx-auto">
       <div className="w-1/3 flex flex-col gap-3">
         {orders.length === 0 ? (
           <p className="text-gray-500 text-center">No orders found</p>
@@ -72,7 +75,6 @@ export default function OrdersPage() {
         )}
       </div>
 
-      {/* Order Details + Tracker + Rating */}
       <div className="w-2/3 flex flex-col gap-6">
         {selectedOrder ? (
           <>
