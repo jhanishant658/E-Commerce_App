@@ -16,6 +16,7 @@ import {
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import ProductList from './productList'
+import { useParams } from 'react-router-dom'
 
 const sortOptions = [
 
@@ -73,8 +74,8 @@ const filters = [
     ],
   },
   {
-    id: 'DisCount',
-    name: 'DisCount',
+    id: 'Discount',
+    name: 'Discount',
     options: [
       { value: '10%', label: '10%', checked: false },
       { value: '20%', label: '20%', checked: false },
@@ -93,7 +94,8 @@ function classNames(...classes) {
 
 export default function Category() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-
+  const params = useParams();
+  console.log("Category Params:", params);
   return (
     <div className="bg-white">
       <div>
@@ -326,7 +328,7 @@ export default function Category() {
 
               {/* Product grid */}
               <div className="lg:col-span-3"> 
-                 <ProductList />
+                 <ProductList params={params} />
               </div>
              
             </div>

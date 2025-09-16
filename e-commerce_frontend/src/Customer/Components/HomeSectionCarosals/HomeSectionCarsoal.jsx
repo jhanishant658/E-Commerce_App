@@ -6,11 +6,11 @@ import { Button } from '@mui/material';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import axios from 'axios';
 
-export default function HomeSectionCarousel({ sectionName }) {
-  const [products, setProducts] = useState([]);
+export default function HomeSectionCarousel({ sectionId }) {
+  
   const carouselRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
+ const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchProductByCategory = async () => {
       const token = localStorage.getItem("token");
@@ -21,7 +21,7 @@ export default function HomeSectionCarousel({ sectionName }) {
 
       try {
         const res = await axios.get(
-          `http://localhost:8081/products/category/${sectionName}`, 
+          `http://localhost:8081/products/category/${sectionId}`, 
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ export default function HomeSectionCarousel({ sectionName }) {
     };
 
     fetchProductByCategory();
-  }, [sectionName]);
+  }, [sectionId]);
 
   const slidePrev = () => carouselRef.current?.slidePrev();
   const slideNext = () => carouselRef.current?.slideNext();
@@ -57,10 +57,9 @@ export default function HomeSectionCarousel({ sectionName }) {
   return (
     <div className="relative px-4 sm:px-6 lg:px-8 pt-16 pb-20">
       {/* Section Heading */}
-      <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 mb-6">
-        {sectionName || 'Customers also purchased'}
-      </h2>
-
+<h2 className="text-3xl font-extrabold tracking-tight text-gray-900 mb-6">
+  {products.length > 0 ? products[0].category.name : 'Customers also purchased'}
+</h2>
       {/* Carousel */}
       <AliceCarousel
         ref={carouselRef}

@@ -8,7 +8,7 @@ import { Box, Typography } from "@mui/material";
 
 const steps = ["Order Placed", "Packed", "Shipped", "Out for Delivery", "Delivered"];
 
-export default function OrderTracker({ status }) {
+export default function OrderTracker({ key,status }) {
   const statusIndex = steps.findIndex((s) => s === status);
   const [animatedStep, setAnimatedStep] = useState(0);
 

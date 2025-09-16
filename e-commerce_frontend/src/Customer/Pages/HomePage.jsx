@@ -15,9 +15,11 @@ const HomePage = () => {
       <PromoSection/>
  
     <div className='space-y-10 py-20 flex flex-col justify-center px -5 lg:px-10'>
-      <HomeSectionCarosal sectionName = {"Shoes"}/>
-      <HomeSectionCarosal sectionName={"Ear Buds"}/>
-      <HomeSectionCarosal sectionName= {"Smartphone"}/>
+      <HomeSectionCarosal sectionId= {257}/>
+      <HomeSectionCarosal sectionId = {155}/>
+      <HomeSectionCarosal sectionId={203}/>
+      <HomeSectionCarosal sectionId= {206}/>
+     
     </div>
     <div className='Footer '>
       <Footer />

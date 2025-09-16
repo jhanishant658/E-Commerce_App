@@ -45,10 +45,10 @@ public class ProductController {
         // Implementation for deleting a product
         return productService.deleteProductById(id);
     }
-    @GetMapping("/products/category/{categoryName}")
-    public ResponseEntity<List<Product>> getProductByCategory(@PathVariable String categoryName) {
+    @GetMapping("/products/category/{categoryId}")
+    public ResponseEntity<List<Product>> getProductByCategory(@PathVariable Long categoryId) {
         // Implementation for retrieving products by category
-        return productService.getProductByCategory(categoryName);
+        return productService.getProductByCategory(categoryId);
     }
     @GetMapping("/products/filter")
     public ResponseEntity<List<Product>> filterProducts(

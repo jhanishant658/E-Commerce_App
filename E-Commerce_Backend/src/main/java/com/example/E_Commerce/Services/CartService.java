@@ -97,6 +97,8 @@ public class CartService {
     cart.getCartItems().clear();
     cartRepository.save(cart);
 }
-
+public void deleteOneItem(Long userId ,Long cartItemId){
+         cartItemService.removeCartItem(userId , cartItemId);
+}
 
 }

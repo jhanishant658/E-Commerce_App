@@ -50,6 +50,7 @@ export default function OrdersPage() {
         });
 
         setOrders(fetchedOrders);
+       setSelectedOrder(fetchedOrders[0]);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       }
@@ -79,7 +80,7 @@ export default function OrdersPage() {
         {selectedOrder ? (
           <>
             <OrderDetail order={selectedOrder} />
-            <OrderTracker status={selectedOrder.status} />
+           <OrderTracker key={selectedOrder.id} status={selectedOrder.status} />
             <OrderRating
               orderId={selectedOrder.id}
               savedRatings={ratings}

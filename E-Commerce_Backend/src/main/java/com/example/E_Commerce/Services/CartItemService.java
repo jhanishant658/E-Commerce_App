@@ -54,35 +54,35 @@ public class CartItemService {
       }
       public CartItem isCartItemExists(Cart cart , Product product , String size, Long userId){
          return cartItemRepository.isCartItemExists(cart, product, size,userId);}
-        public void removeCartItem(Long userId, Long cartItemId) {
-    CartItem cartItem = cartItemRepository.findById(cartItemId)
-                        .orElseThrow(() -> new RuntimeException("CartItem not found"));
+    public void removeCartItem(Long userId, Long cartItemId) {
+        // 1️⃣ CartItem fetch karo
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new RuntimeException("Cart item not found"));
 
-    User user = userService.findById(cartItem.getCart().getUser().getId());
-    User reqUser = userService.getUserById(userId);
+        // 2️⃣ User verify karo
+        User cartOwner = cartItem.getCart().getUser();
+        if (!cartOwner.getId().equals(userId)) {
+            throw new RuntimeException("You cannot delete this cart item");
+        }
 
-    if (user.getId().equals(reqUser.getId())) {
         Cart cart = cartItem.getCart();
 
-        // cart ke andar se bhi remove kar
-        cart.getCartItems().remove(cartItem);
+        // 3️⃣ Cart ke list se remove karo (memory me bhi remove hona chahiye)
+        cart.getCartItems().removeIf(item -> item.getId().equals(cartItemId));
 
-        // DB se delete kar
-        cartItemRepository.delete(cartItem);
+        // 4️⃣ Cart totals update karo (null safety ke saath)
+        cart.setTotalItems(Math.max(0, cart.getTotalItems() - cartItem.getQuantity()));
+        cart.setTotalPrice(Math.max(0.0, cart.getTotalPrice() - cartItem.getPrice()));
+        cart.setTotalDiscount(Math.max(0, cart.getTotalDiscount() - (int) cartItem.getDiscountedPrice()));
 
-        // totals update kar
-        cart.setTotalItems(cart.getTotalItems() - cartItem.getQuantity());
-        cart.setTotalPrice(cart.getTotalPrice() - cartItem.getPrice());
-        cart.setTotalDiscount((int)cart.getTotalDiscount() - (int)cartItem.getDiscountedPrice());
-
+        // 5️⃣ DB me changes save karo
         cartRepository.save(cart);
-    } else {
-        System.out.println("You cannot delete this cart item");
+        cartItemRepository.delete(cartItem);
     }
-}
 
-        
-           public String addCartItem(Long userId , AddItemRequest addItemRequest){
+
+
+    public String addCartItem(Long userId , AddItemRequest addItemRequest){
         
         User user = userService.getUserById(userId);
         if(user == null){

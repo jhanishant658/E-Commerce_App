@@ -155,9 +155,9 @@ public class ProductService {
             return ResponseEntity.status(500).build();
         }
     }
-   public ResponseEntity<List<Product>> getProductByCategory(String categoryName) {
+   public ResponseEntity<List<Product>> getProductByCategory(Long Id) {
     try {
-        Category category = categoryRepository.findByName(categoryName);
+        Category category = categoryRepository.findById(Id).orElse(null);
 
         if (category == null) {
             System.out.println("Category Not Found");

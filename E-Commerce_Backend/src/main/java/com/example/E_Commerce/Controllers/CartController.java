@@ -1,19 +1,13 @@
 package com.example.E_Commerce.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.E_Commerce.Models.Cart;
 import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Request.AddItemRequest;
 import com.example.E_Commerce.Request.UpdateCartItemReq;
 import com.example.E_Commerce.Services.CartService;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -38,5 +32,8 @@ public class CartController {
     public Cart updateCartItem(@PathVariable Long userId , @PathVariable Long cartItemId, @RequestBody UpdateCartItemReq req){ 
         return cartService.updateCartItem(userId, cartItemId , req);
     }
-    
+    @DeleteMapping("/cartItem/{userId}/{cartItemId}")
+    public void deleteCartItem(@PathVariable Long userId , @PathVariable Long cartItemId){
+        cartService.deleteOneItem(userId , cartItemId);
+    }
 }
