@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.E_Commerce.Models.Cart;
 import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Request.AddItemRequest;
+import com.example.E_Commerce.Request.UpdateCartItemReq;
 import com.example.E_Commerce.Services.CartService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +34,9 @@ public class CartController {
     public Cart findUserCart(@PathVariable Long userId){
         return cartService.findUserCart(userId);
     }
-    
+    @PatchMapping("/cartitem/{userId}/{cartItemId}")
+    public Cart updateCartItem(@PathVariable Long userId , @PathVariable Long cartItemId, @RequestBody UpdateCartItemReq req){ 
+        return cartService.updateCartItem(userId, cartItemId , req);
+    }
     
 }

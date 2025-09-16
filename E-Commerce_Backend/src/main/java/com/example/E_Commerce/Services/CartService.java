@@ -13,6 +13,7 @@ import com.example.E_Commerce.Models.Product;
 import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Repositories.CartRepository;
 import com.example.E_Commerce.Request.AddItemRequest;
+import com.example.E_Commerce.Request.UpdateCartItemReq;
 
 @Service
 public class CartService {
@@ -69,6 +70,18 @@ public class CartService {
       cart.setDiscountedPrice(totalPrice - totalDiscount); // Net payable amount
       return cartRepository.save(cart) ; 
     }
+    public Cart updateCartItem(Long userId, Long cartItemId, UpdateCartItemReq req) {
+    Cart cart = cartRepository.findByUserId(userId);
+
+    // Ye function directly DB se CartItem nikal ke update karta hai
+    CartItem updatedItem = cartItemService.updateCartItem(cartItemId, userId, req);
+
+    if (updatedItem != null) {
+        return findUserCart(userId);
+    }
+    return cart;
+}
+
  public void deleteCartItem(Long userId) {
     Cart cart = cartRepository.findByUserId(userId);
 

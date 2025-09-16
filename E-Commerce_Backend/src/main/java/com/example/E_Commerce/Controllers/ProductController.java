@@ -36,6 +36,10 @@ public class ProductController {
         // Implementation for updating a product
         return productService.updateProductById(id, request);
     }
+    @GetMapping("/product/{FirstLevelCategory}/{SecondLevelCategory}/{ThirdLevelCategory}")
+    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable String FirstLevelCategory, @PathVariable String SecondLevelCategory, @PathVariable String ThirdLevelCategory) {
+        return productService.getProductsByAllLevels(FirstLevelCategory, SecondLevelCategory, ThirdLevelCategory);
+    }
 @DeleteMapping("/admin/products/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         // Implementation for deleting a product

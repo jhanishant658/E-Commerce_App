@@ -11,7 +11,7 @@ import com.example.E_Commerce.Models.Category;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Category findByName(String Category);
  @Query("SELECT c FROM Category c WHERE c.name = :name AND c.parentCategory = :parentCategory")
-Category findByNameAndParentCategory(@Param("name") String name, @Param("parentCategory") Category parentCategory);
+Category findByNameAndParentCategory( @Param("name") String name, @Param("parentCategory") Category parentCategory);
 
 
 

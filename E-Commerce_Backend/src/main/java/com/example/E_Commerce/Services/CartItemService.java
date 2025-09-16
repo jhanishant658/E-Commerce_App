@@ -12,6 +12,7 @@ import com.example.E_Commerce.Models.User;
 import com.example.E_Commerce.Repositories.CartItemRepository;
 import com.example.E_Commerce.Repositories.CartRepository;
 import com.example.E_Commerce.Request.AddItemRequest;
+import com.example.E_Commerce.Request.UpdateCartItemReq;
 
 @Service
 public class CartItemService {
@@ -30,7 +31,7 @@ public class CartItemService {
 
         return cartItemRepository.save(cartItem);
       }
-      public CartItem updateCartItem(Long cartItemId, Long userId,CartItem updatedCartItem){
+      public CartItem updateCartItem(Long cartItemId, Long userId,UpdateCartItemReq updatedCartItem){
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElse(null);
         if(cartItem == null){
             return null;
@@ -41,9 +42,9 @@ public class CartItemService {
         }
         if(cartItem.getCart().getUser().getId().equals(userId)){
            cartItem.setQuantity(updatedCartItem.getQuantity());
-           cartItem.setSize(updatedCartItem.getSize());
-              cartItem.setPrice(updatedCartItem.getProduct().getPrice() * updatedCartItem.getQuantity());
-              cartItem.setDiscountedPrice(updatedCartItem.getProduct().getDiscountedPrice() * updatedCartItem.getQuantity());
+           
+              cartItem.setPrice(cartItem.getProduct().getPrice() * updatedCartItem.getQuantity());
+              cartItem.setDiscountedPrice(cartItem.getProduct().getDiscountedPrice() * updatedCartItem.getQuantity());
               return cartItemRepository.save(cartItem);
         }
 

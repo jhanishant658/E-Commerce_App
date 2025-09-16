@@ -71,6 +71,34 @@ public class ProductService {
         }
         
     }
+   public ResponseEntity<List<Product>> getProductsByAllLevels(
+        String firstLevel, 
+        String secondLevel, 
+        String thirdLevel
+) {
+    try {
+        if (firstLevel == null || secondLevel == null || thirdLevel == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Category topCategory = categoryRepository.findByName(firstLevel);
+        if (topCategory == null) return ResponseEntity.notFound().build();
+
+        Category subCategory = categoryRepository.findByNameAndParentCategory(secondLevel, topCategory);
+        if (subCategory == null) return ResponseEntity.notFound().build();
+
+        Category thirdCategory = categoryRepository.findByNameAndParentCategory(thirdLevel, subCategory);
+        if (thirdCategory == null) return ResponseEntity.notFound().build();
+
+        List<Product> products = productRepository.findByCategory(thirdCategory);
+        if (products.isEmpty()) return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(products);
+
+    } catch (Exception e) {
+        System.out.println("Error retrieving products: " + e.getMessage());
+        return ResponseEntity.status(500).build();
+    }
+}
 
     public Product getProductById(Long id){
         try {
