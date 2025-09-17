@@ -29,7 +29,8 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
-
+    @Autowired
+    private ProductService productService;
    @Autowired
    private AddressRepository addressRepository;
     // Place an order for a user
@@ -49,6 +50,10 @@ public class OrderService {
             .map(cartItem -> {
                 OrderItem orderItem = new OrderItem();
                 orderItem.setProduct(cartItem.getProduct());
+                Product p = cartItem.getProduct();
+                p.setStock(p.getStock() - cartItem.getQuantity());
+                if(p.getStock() == 0) productService.deleteProductById(p.getId());
+                productService.updateProductById(p.getId(), p);
                 product.add(cartItem.getProduct());
                 orderItem.setSize(cartItem.getSize());
                 orderItem.setQuantity(cartItem.getQuantity());
