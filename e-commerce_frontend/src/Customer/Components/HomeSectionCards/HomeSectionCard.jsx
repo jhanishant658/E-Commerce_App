@@ -21,10 +21,23 @@ export default function HomeSectionCard({ product }) {
     )
   }
 
-  // Map backend fields to UI expected fields
+  // Map backend fields
   const imageSrc = product.imageUrl
   const name = product.title
+  const brand = product.brand
   const price = product.discountedPrice || product.price
+  const originalPrice = product.price
+  const discountPercent = product.discountpercent
+  const color = product.color
+  const description = product.description
+  const sizes = product.sizes || []
+  const stock = product.stock
+
+  // Ratings
+  const averageRating = product.ratings.length
+    ? product.ratings.reduce((sum, r) => sum + r.rating, 0) / product.ratings.length
+    : 0
+  const numberOfRatings = product.ratings.length
 
   return (
     <>
@@ -43,16 +56,51 @@ export default function HomeSectionCard({ product }) {
         </div>
 
         {/* Info Section */}
-        <div className="mt-4 flex justify-between items-start">
-          <div>
-            <h3 className="text-base font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
-              {name}
-            </h3>
-            <p className="mt-1 text-sm text-gray-500">{product.color || ''}</p>
-            <p className="mt-1 text-sm text-gray-500 line-clamp-2">{product.description}</p>
+        <div className="mt-4 flex flex-col gap-1">
+          <h3 className="text-base font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
+            {name}
+          </h3>
+          <p className="text-sm text-gray-500">{brand}</p>
+          <p className="text-sm text-gray-500">{color}</p>
+          <div className="flex items-center gap-1">
+            {[0, 1, 2, 3, 4].map((rating) => (
+              <StarIcon
+                key={rating}
+                className={classNames(
+                  averageRating > rating ? 'text-yellow-500' : 'text-gray-300',
+                  'h-4 w-4'
+                )}
+              />
+            ))}
+            {numberOfRatings > 0 && (
+              <span className="ml-1 text-xs text-indigo-600">{numberOfRatings} ratings</span>
+            )}
           </div>
-          <p className="text-base font-bold text-indigo-600">₹{price}</p>
+          <div className="flex gap-2 items-center">
+            <p className="text-indigo-600 font-bold">₹{price}</p>
+            {discountPercent && (
+              <p className="text-gray-500 line-through text-sm">₹{originalPrice}</p>
+            )}
+            {discountPercent && (
+              <p className="text-green-600 text-sm font-medium">{discountPercent} OFF</p>
+            )}
+          </div>
+          <p className="text-sm text-gray-500 line-clamp-2">{description}</p>
         </div>
+
+        {/* Sizes */}
+        {sizes.length > 0 && (
+          <div className="mt-2 flex gap-2 flex-wrap">
+            {sizes.map((size) => (
+              <span
+                key={size.name}
+                className="border px-2 py-1 rounded text-xs bg-gray-100"
+              >
+                {size.name} ({size.quantity})
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* Quick Overview Button */}
         <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center">
@@ -94,7 +142,16 @@ export default function HomeSectionCard({ product }) {
                 {/* Product Details */}
                 <div className="flex w-full flex-col md:w-1/2 gap-4">
                   <h2 className="text-2xl font-bold text-gray-900">{name}</h2>
-                  <p className="text-2xl text-gray-900">₹{price}</p>
+                  <p className="text-sm text-gray-500">{brand}</p>
+                  <p className="text-xl text-gray-900">₹{price}</p>
+                  {discountPercent && (
+                    <p className="text-gray-500 line-through text-sm">₹{originalPrice}</p>
+                  )}
+                  {discountPercent && (
+                    <p className="text-green-600 text-sm font-medium">{discountPercent} OFF</p>
+                  )}
+                  <p className="text-gray-500">{color}</p>
+                  <p className="text-sm">{description}</p>
 
                   {/* Ratings */}
                   <div className="flex items-center gap-2">
@@ -102,17 +159,31 @@ export default function HomeSectionCard({ product }) {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          (product.rating || 0) > rating ? 'text-yellow-500' : 'text-gray-300',
+                          averageRating > rating ? 'text-yellow-500' : 'text-gray-300',
                           'h-5 w-5'
                         )}
                       />
                     ))}
-                    {product.numberOfRatings > 0 && (
+                    {numberOfRatings > 0 && (
                       <span className="ml-2 text-sm font-medium text-indigo-600">
-                        {product.numberOfRatings} ratings
+                        {numberOfRatings} ratings
                       </span>
                     )}
                   </div>
+
+                  {/* Sizes */}
+                  {sizes.length > 0 && (
+                    <div className="flex gap-2 flex-wrap mt-2">
+                      {sizes.map((size) => (
+                        <span
+                          key={size.name}
+                          className="border px-2 py-1 rounded text-xs bg-gray-100"
+                        >
+                          {size.name} ({size.quantity})
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Buttons */}
                   <div className="flex flex-col gap-3 mt-4">

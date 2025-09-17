@@ -17,18 +17,25 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     
     List<Product> findByCategory(Category category);
-    @Query("SELECT p FROM Product p " +
-       "WHERE (:category IS NULL OR p.category.name = :category) " +
-       "AND (:color IS NULL OR p.color = :color) " +
-       "AND (:minPrice IS NULL OR p.discountedPrice >= :minPrice) " +
-       "AND (:maxPrice IS NULL OR p.discountedPrice <= :maxPrice) " +
-       "AND p.stock > 0")
-List<Product> filterProducts(
-    @Param("category") String category,
-    @Param("color") String color,
-    @Param("minPrice") Integer minPrice,
-    @Param("maxPrice") Integer maxPrice
-);
+    @Query("""
+SELECT p FROM Product p
+WHERE (:level1 IS NULL OR p.category.parentCategory.parentCategory.name = :level1)
+AND (:level2 IS NULL OR p.category.parentCategory.name = :level2)
+AND (:level3 IS NULL OR p.category.name = :level3)
+AND (:color IS NULL OR p.color = :color)
+AND (:minPrice IS NULL OR p.discountedPrice >= :minPrice)
+AND (:maxPrice IS NULL OR p.discountedPrice <= :maxPrice)
+AND p.stock > 0
+""")
+    List<Product> filterProducts(
+            @Param("level1") String level1,
+            @Param("level2") String level2,
+            @Param("level3") String level3,
+            @Param("color") String color,
+            @Param("minPrice") Integer minPrice,
+            @Param("maxPrice") Integer maxPrice
+    );
+
 
 
 }

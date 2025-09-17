@@ -179,18 +179,27 @@ public class ProductService {
     }
 }
 
-   public ResponseEntity<List<Product>> filterProducts(String category, List<String> colors, Integer minPrice, Integer maxPrice,
+   public ResponseEntity<List<Product>> filterProducts(String level1 ,String level2 ,String level3, List<String> colors, Integer minPrice, Integer maxPrice,
      Integer minDiscount, Integer maxDiscount, String sortBy) {
 
     try {
         List<Product> products = new ArrayList<>();
 
         if (colors == null || colors.isEmpty()) {
-            colors = List.of((String) null); // null for all colors
+            List<Product> categoryFiltered = productRepository.filterProducts(level1 ,level2 ,level3 ,null , minPrice, maxPrice);
+            for (Product p : categoryFiltered) {
+                int discount = Integer.parseInt(p.getDiscountpercent().replace("%",""));
+                if ((minDiscount == null || discount >= minDiscount) &&
+                    (maxDiscount == null || discount <= maxDiscount)) {
+                    products.add(p);
+                }
+            }
         }
+else {
+    
 
         for (String color : colors) {
-            List<Product> colorFiltered = productRepository.filterProducts(category, color, minPrice, maxPrice);
+            List<Product> colorFiltered = productRepository.filterProducts(level1,level2,level3, color, minPrice, maxPrice);
             
             // Discount filter backend me
             for (Product p : colorFiltered) {
@@ -201,8 +210,17 @@ public class ProductService {
                 }
             }
         }
+    }
 
         // Sorting
+       if (sortBy == null || sortBy.isEmpty()) {
+        Collections.sort(products, (p1, p2) -> Double.compare(p1.getDiscountedPrice(), p2.getDiscountedPrice()));
+         if (products.isEmpty()) return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(products);
+
+        
+       }
         Collections.sort(products, (p1, p2) -> {
             switch (sortBy) {
                 case "priceAsc":

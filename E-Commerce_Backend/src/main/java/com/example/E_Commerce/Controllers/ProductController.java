@@ -52,15 +52,18 @@ public class ProductController {
     }
     @GetMapping("/products/filter")
     public ResponseEntity<List<Product>> filterProducts(
-        @RequestParam(required = false) String category,
-        @RequestParam(required = false) List<String> colors,
-        @RequestParam(required = false) Integer minPrice,
-        @RequestParam(required = false) Integer maxPrice,
-        @RequestParam(required = false) Integer minDiscount,
-        @RequestParam(required = false) Integer maxDiscount,
-        @RequestParam(required = false) String sortBy
-) {
-    return productService.filterProducts(category, colors, minPrice, maxPrice, minDiscount, maxDiscount, sortBy);
-}
+            @RequestParam(required = false) String level1,
+            @RequestParam(required = false) String level2,
+            @RequestParam(required = false) String level3,
+            @RequestParam(required = false) List<String> colors,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false) Integer minDiscount,
+            @RequestParam(required = false) Integer maxDiscount,
+            @RequestParam(required = false) String sortBy
+    ) {
+        return productService.filterProducts(level1, level2, level3, colors, minPrice, maxPrice, minDiscount, maxDiscount, sortBy);
+    }
+
 
 }
