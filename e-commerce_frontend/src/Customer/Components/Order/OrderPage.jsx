@@ -16,7 +16,9 @@ export default function OrdersPage() {
         const user = JSON.parse(localStorage.getItem("User"));
         const userId = user?.id;
 
-        const res = await axios.get(`http://localhost:8081/order/orderhistory/${userId}`);
+        const res = await axios.get(
+          `http://localhost:8081/order/orderhistory/${userId}`
+        );
 
         const fetchedOrders = res.data.map((response) => {
           const order = response.order;
@@ -50,7 +52,7 @@ export default function OrdersPage() {
         });
 
         setOrders(fetchedOrders);
-       setSelectedOrder(fetchedOrders[0]);
+        setSelectedOrder(fetchedOrders[0]);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       }
@@ -60,8 +62,9 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <div className="flex gap-6 p-6 max-w-7xl mx-auto">
-      <div className="w-1/3 flex flex-col gap-3">
+    <div className="flex gap-6 p-6 max-w-7xl mx-auto h-[80vh] overflow-hidden scrollbar-hide">
+      {/* Left Scroll Section */}
+      <div className="w-1/3 flex flex-col gap-3 overflow-y-auto pr-2 scrollbar-hide">
         {orders.length === 0 ? (
           <p className="text-gray-500 text-center">No orders found</p>
         ) : (
@@ -76,11 +79,12 @@ export default function OrdersPage() {
         )}
       </div>
 
-      <div className="w-2/3 flex flex-col gap-6">
+      {/* Right Scroll Section */}
+      <div className="w-2/3 flex flex-col gap-6 overflow-y-auto pl-2 scrollbar-hide">
         {selectedOrder ? (
           <>
             <OrderDetail order={selectedOrder} />
-           <OrderTracker key={selectedOrder.id} status={selectedOrder.status} />
+            <OrderTracker key={selectedOrder.id} status={selectedOrder.status} />
             <OrderRating
               orderId={selectedOrder.id}
               savedRatings={ratings}
@@ -88,7 +92,9 @@ export default function OrdersPage() {
             />
           </>
         ) : (
-          <p className="text-gray-500 text-center">Select an order to view details</p>
+          <p className="text-gray-500 text-center">
+            Select an order to view details
+          </p>
         )}
       </div>
     </div>

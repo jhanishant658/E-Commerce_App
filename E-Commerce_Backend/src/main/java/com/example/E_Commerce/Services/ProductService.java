@@ -251,5 +251,15 @@ else {
         return ResponseEntity.status(500).build();
     }
 }
+   public ResponseEntity<List<Product>> searchProducts(String searchTerm) {
+    List<Product> products = productRepository.findByBrandContainingAndStockGreaterThan(searchTerm,0);
+    if(products.isEmpty()) {
+        products = productRepository.findByTitleContainingAndStockGreaterThan(searchTerm,0);
+    }
+    if(products.isEmpty()) {
+        return ResponseEntity.notFound().build();
+    }
+     return ResponseEntity.ok(products);
+   }
 
 }

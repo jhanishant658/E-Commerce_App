@@ -44,7 +44,8 @@ export default function HomeSectionCard({ product }) {
       {/* Product Card */}
       <div
         key={product.id}
-        className="group relative mt-6 mb-6 p-4 rounded-2xl bg-white shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+        onClick={() => setOpen(true)} // 👈 poore card par click hone par modal open
+        className="group relative mt-6 mb-6 p-4 rounded-2xl bg-white shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 cursor-pointer"
       >
         {/* Product Image */}
         <div className="overflow-hidden rounded-xl">
@@ -101,16 +102,6 @@ export default function HomeSectionCard({ product }) {
             ))}
           </div>
         )}
-
-        {/* Quick Overview Button */}
-        <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center">
-          <button
-            onClick={() => setOpen(true)}
-            className="rounded-lg bg-indigo-600 px-5 py-2 text-sm font-medium text-white shadow hover:bg-indigo-700 transition-colors duration-300"
-          >
-            Quick Overview
-          </button>
-        </div>
       </div>
 
       {/* Quick View Modal */}

@@ -2,10 +2,10 @@ import React, { useState ,useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function OrderSummary() {
+export default function OrderSummary({selectedAddress}) {
   const location = useLocation();
   const navigate = useNavigate();
-  const selectedAddress = location.state?.selectedAddress;
+ 
 
   const [cartItems, setCartItems] = useState([ ]);
   useEffect(() => {

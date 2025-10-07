@@ -35,7 +35,7 @@ export default function OrderRating({ orderId, savedRatings, setSavedRatings }) 
   return (
     <Box>
       {!submitted ? (
-        <Card className="p-4 bg-white shadow-md flex flex-col gap-3">
+        <Card className="p-4 bg-white shadow-md flex flex-col gap-3 ">
           <Typography variant="h6">Give your rating</Typography>
           <Box className="flex gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -59,7 +59,7 @@ export default function OrderRating({ orderId, savedRatings, setSavedRatings }) 
           </Button>
         </Card>
       ) : (
-        <Card className="p-4 bg-white shadow-md flex flex-col gap-2">
+        <Card className="p-4 bg-white shadow-md flex flex-col gap-2 ">
           <Box className="flex items-center gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <StarIcon

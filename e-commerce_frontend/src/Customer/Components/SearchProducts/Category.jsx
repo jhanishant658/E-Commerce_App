@@ -7,13 +7,13 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import ProductList from './productList'
+import SearchProduct from './SearchProduct'
 import { useParams } from 'react-router-dom'
 
 const sortOptions = [
    { name: 'Discount: Low to High', value: 'discountAsc', current: false },
   { name: 'Discount :High to Low', value: 'discountDesc', current: false },
-  { name: 'Price: Low to High', value: 'priceAsc', current: false },
+  { name: 'Price: Low to High', value: 'priceDesc', current: false },
   { name: 'Price: High to Low', value: 'priceDesc', current: false },
 ]
 
@@ -42,7 +42,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Category() {
+export default function CategoryOfProducts() {
   const params = useParams()
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
@@ -155,7 +155,7 @@ export default function Category() {
 
             {/* Product Grid */}
             <div className="lg:col-span-3">
-              <ProductList params={params} filters={selectedFilters} />
+              <SearchProduct params={params}  />
             </div>
           </div>
         </section>

@@ -8,7 +8,7 @@ import { Box, Typography } from "@mui/material";
 
 const steps = ["Order Placed", "Packed", "Shipped", "Out for Delivery", "Delivered"];
 
-export default function OrderTracker({ key,status }) {
+export default function OrderTracker({ status }) {
   const statusIndex = steps.findIndex((s) => s === status);
   const [animatedStep, setAnimatedStep] = useState(0);
 
@@ -31,7 +31,7 @@ export default function OrderTracker({ key,status }) {
   }, [statusIndex]); // depend only on current status
 
   return (
-    <Box className="bg-white shadow-md rounded-xl p-6 w-full">
+    <Box className="bg-white shadow-md rounded-xl p-6 w-full ">
       <Typography variant="h6" className="mb-4 font-semibold text-center">
         Track Your Order
       </Typography>

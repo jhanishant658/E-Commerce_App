@@ -17,7 +17,5 @@ public class PaymentInFormation {
     @Column(name ="Expiry_Date")
     private String expirydate;
     @Column(name ="CVV")
-    private String cvv;
-   
-    
+    private String cvv;    
 }

@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import AdminHomePage from './Admin/Components/AdminHomePage';
 import AddProduct from './Admin/Components/AddProduct';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CategoryOfProducts from './Customer/Components/SearchProducts/Category';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/stores" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminHomePage />} />
           <Route path="/createproduct" element={<AddProduct />} />
+          <Route path = "/:searchTerm" element = {<CategoryOfProducts/>} />
         </Routes>
       </Router>
 

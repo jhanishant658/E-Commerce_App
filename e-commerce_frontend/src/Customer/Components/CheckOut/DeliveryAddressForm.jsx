@@ -32,8 +32,8 @@ export default function DeliveryAddressForm() {
       return;
     }
 
-    // Add to local state only
-    setSavedAddresses([...savedAddresses, newAddress]);
+    // Add to local state onlysetSavedAddresses([...savedAddresses, newAddress]);
+    
 
     // Reset form
     setNewAddress({

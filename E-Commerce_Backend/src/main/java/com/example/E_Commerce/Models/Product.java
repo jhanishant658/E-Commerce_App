@@ -18,13 +18,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
-
+@NoArgsConstructor
 
 public class Product {
 @Id
@@ -64,7 +65,6 @@ private int stock;
 @Column(name = "Created_At")
 
 private LocalDateTime createdAt;
-public Product() {
-}
+
 
 }

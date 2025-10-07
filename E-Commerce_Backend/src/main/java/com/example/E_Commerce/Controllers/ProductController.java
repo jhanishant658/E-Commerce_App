@@ -64,6 +64,8 @@ public class ProductController {
     ) {
         return productService.filterProducts(level1, level2, level3, colors, minPrice, maxPrice, minDiscount, maxDiscount, sortBy);
     }
-
-
+       @GetMapping("/product/search/{searchTerm}")
+       public ResponseEntity<List<Product>> searchProducts(@PathVariable String searchTerm) {
+           return productService.searchProducts(searchTerm);
+       }
 }

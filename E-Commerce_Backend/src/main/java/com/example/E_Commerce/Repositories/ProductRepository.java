@@ -35,6 +35,9 @@ AND p.stock > 0
             @Param("minPrice") Integer minPrice,
             @Param("maxPrice") Integer maxPrice
     );
+    List<Product> findByBrandContainingAndStockGreaterThan(String brand,int stock );
+    List<Product> findByTitleContainingAndStockGreaterThan(String name , int Stock);
+    
 
 
 

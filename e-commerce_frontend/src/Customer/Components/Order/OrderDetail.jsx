@@ -4,7 +4,7 @@ export default function OrderDetail({ order }) {
   if (!order) return <p className="text-gray-500">Select an order to see details.</p>;
 
   return (
-    <div className="bg-white shadow-md rounded-xl p-6">
+    <div className="bg-white shadow-md rounded-xl p-6 ">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Order #{order.orderId}
       </h2>

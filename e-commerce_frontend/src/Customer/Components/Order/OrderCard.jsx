@@ -39,16 +39,20 @@ export default function OrderCard({ order, onClick, isSelected }) {
         </span>
         <span
           className={`text-sm font-semibold ${
-            order.status === "DELIVERED"
+            order.status.toUpperCase() === "DELIVERED"
               ? "text-green-600"
-              : order.status === "SHIPPED"
+              : order.status.toUpperCase() === "SHIPPED"
               ? "text-blue-600"
-              : order.status === "PLACED"
+              : order.status.toUpperCase() === "PLACED"
               ? "text-orange-600"
+              : order.status.toUpperCase() === "PACKED"
+              ? "text-yellow-600"
+              : order.status.toUpperCase() === "OUT FOR DELIVERY"
+              ? "text-red-600"
               : "text-gray-600"
           }`}
         >
-          {order.status || "UNKNOWN"}
+          {order.status.toUpperCase() || "UNKNOWN"}
         </span>
       </div>
     </div>

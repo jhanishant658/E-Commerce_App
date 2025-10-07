@@ -105,7 +105,6 @@ console.log(savedAddress);
       case 2:
         return (
           <OrderSummary
-            deliveryAddress={selectedAddress}
             onProceed={() => navigate(`?step=3`)}
           />
         );
