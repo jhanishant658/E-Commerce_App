@@ -15,8 +15,8 @@ const HomePage = () => {
       <PromoSection/>
  
     <div className='space-y-10 py-20 flex flex-col justify-center px -5 lg:px-10'>
-      <HomeSectionCarosal sectionId= {257}/>
-      <HomeSectionCarosal sectionId = {155}/>
+      <HomeSectionCarosal sectionId= {3}/>
+      <HomeSectionCarosal sectionId = {53}/>
       <HomeSectionCarosal sectionId={203}/>
       <HomeSectionCarosal sectionId= {206}/>
      

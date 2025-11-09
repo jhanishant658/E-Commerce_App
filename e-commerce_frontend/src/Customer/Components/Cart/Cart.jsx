@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import Navigation from "../Navigation/Navigation";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
@@ -104,7 +105,8 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-200 p-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <Navigation/>
+      <div className="mt-20 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Side - Cart Items */}
         <div className="lg:col-span-2 bg-white shadow-xl rounded-2xl p-5 border border-gray-200">
           <h1 className="text-3xl font-bold border-b pb-4 mb-4 text-gray-800 flex items-center gap-2">

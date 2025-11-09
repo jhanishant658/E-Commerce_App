@@ -125,7 +125,7 @@ const navigation = {
           items: [
             { name: 'Watches', href: '#' },
             { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
+            { name: 'Shoes', href: '#' },
             { name: 'Sunglasses', href: '#' },
             { name: 'Hats', href: '#' },
             { name: 'Belts', href: '#' },
