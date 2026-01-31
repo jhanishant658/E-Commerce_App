@@ -8,6 +8,7 @@ import PromoSection from '../Components/PromoSection/PromoSection'
 const HomePage = () => {
   return (
     <>
+     
       <Navigation/>
          <div className='MainCarosals mt-36 m-5 '>
       <MainCarosals />
@@ -17,8 +18,7 @@ const HomePage = () => {
     <div className='space-y-10 py-20 flex flex-col justify-center px -5 lg:px-10'>
       <HomeSectionCarosal sectionId= {3}/>
       <HomeSectionCarosal sectionId = {53}/>
-      <HomeSectionCarosal sectionId={203}/>
-      <HomeSectionCarosal sectionId= {206}/>
+     
      
     </div>
     <div className='Footer '>

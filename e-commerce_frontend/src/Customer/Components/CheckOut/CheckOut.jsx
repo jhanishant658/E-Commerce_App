@@ -16,9 +16,12 @@ export default function Checkout() {
   const location = useLocation();
 
   const querySearch = new URLSearchParams(location.search);
-  const stepFromUrl = parseInt(querySearch.get("step")) || 1;
 
-  const [activeStep, setActiveStep] = useState(stepFromUrl);
+ const stepFromUrl = parseInt(querySearch.get("step")) || 1;
+
+const [activeStep, setActiveStep] = useState(stepFromUrl);
+
+
   const [selectedAddress, setSelectedAddress] = useState(null);
 
   // ✅ Sync URL param and state
