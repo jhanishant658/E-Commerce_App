@@ -17,7 +17,7 @@ export default function OrdersPage() {
         const userId = user?.id;
 
         const res = await axios.get(
-          `https://e-commerce-app-9vum.onrender.com//order/orderhistory/${userId}`
+          `https://e-commerce-app-9vum.onrender.com/order/orderhistory/${userId}`
         );
 
         const fetchedOrders = res.data.map((response) => {

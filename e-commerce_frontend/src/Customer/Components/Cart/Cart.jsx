@@ -23,7 +23,7 @@ export default function Cart() {
       if (!user || !token) return;
 
       try {
-        const res = await axios.get(`https://e-commerce-app-9vum.onrender.com//usercart/${user.id}`, {
+        const res = await axios.get(`https://e-commerce-app-9vum.onrender.com/usercart/${user.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -55,7 +55,7 @@ export default function Cart() {
       if (newQuantity <= 0) return;
 
       const res = await axios.patch(
-        `https://e-commerce-app-9vum.onrender.com//cartitem/${user.id}/${id}`,
+        `https://e-commerce-app-9vum.onrender.com/cartitem/${user.id}/${id}`,
         { quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -81,7 +81,7 @@ export default function Cart() {
 
       if (!user || !token) return;
 
-      await axios.delete(`https://e-commerce-app-9vum.onrender.com//cartItem/${user.id}/${id}`, {
+      await axios.delete(`https://e-commerce-app-9vum.onrender.com/cartItem/${user.id}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

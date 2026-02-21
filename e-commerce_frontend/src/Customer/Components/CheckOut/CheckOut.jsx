@@ -48,7 +48,7 @@ const [activeStep, setActiveStep] = useState(stepFromUrl);
       const amount = location.state?.orderSummary?.grandTotal || 0;
 
       const orderResponse = await axios.post(
-        "https://e-commerce-app-9vum.onrender.com//payment/create-order",
+        "https://e-commerce-app-9vum.onrender.com/payment/create-order",
         { amount }
       );
 
@@ -72,7 +72,7 @@ const [activeStep, setActiveStep] = useState(stepFromUrl);
 console.log(savedAddress);
             // ✅ Place Order After Payment
             const res = await axios.post(
-              `https://e-commerce-app-9vum.onrender.com//order/${userId}`,
+              `https://e-commerce-app-9vum.onrender.com/order/${userId}`,
               savedAddress
             );
 

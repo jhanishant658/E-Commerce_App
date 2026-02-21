@@ -27,12 +27,12 @@ const AdminLogin = () => {
     setError('')
 
     try {
-      const res = await axios.post('https://e-commerce-app-9vum.onrender.com//auth/signin', {
+      const res = await axios.post('https://e-commerce-app-9vum.onrender.com/auth/signin', {
         email,
         password,
       })
 
-      if (res.data.user.role !== 'Admin') {
+      if (res.data.user.role !== 'ADMIN') {
         setError('You are not authorized to access the admin panel.')
         return
       }

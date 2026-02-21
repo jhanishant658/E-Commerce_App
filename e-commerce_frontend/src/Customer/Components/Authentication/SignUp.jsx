@@ -29,7 +29,7 @@ export default function SignUp() {
     }
 
     try {
-      await axios.post("https://e-commerce-app-9vum.onrender.com//auth/signup", {
+      await axios.post("https://e-commerce-app-9vum.onrender.com/auth/signup", {
         firstname: formData.firstname,
         lastname: formData.lastname,
         email: formData.email,

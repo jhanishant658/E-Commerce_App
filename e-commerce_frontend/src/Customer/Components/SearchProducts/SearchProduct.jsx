@@ -14,7 +14,7 @@ export default function SearchProduct({ params }) {
 
         setLoading(true);
 
-        const url = `https://e-commerce-app-9vum.onrender.com//product/search/${searchTerm}`;
+        const url = `https://e-commerce-app-9vum.onrender.com/product/search/${searchTerm}`;
 
         console.log("Fetching:", url);
 
