@@ -25,7 +25,7 @@ export default function ProductList({ params, filters }) {
 
         setLoading(true);
 
-        const url = `http://localhost:8081/products/filter?level1=${params.level1}&level2=${params.level2 || ''}&level3=${params.level3 || ''}&colors=${filters.colors.join(',')}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${filters.discountRange?.min || ''}&maxDiscount=${filters.discountRange?.max || ''}&sortBy=${filters.sortBy || ''}`;
+        const url = `https://e-commerce-app-9vum.onrender.com//products/filter?level1=${params.level1}&level2=${params.level2 || ''}&level3=${params.level3 || ''}&colors=${filters.colors.join(',')}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${filters.discountRange?.min || ''}&maxDiscount=${filters.discountRange?.max || ''}&sortBy=${filters.sortBy || ''}`;
 
         console.log("Fetching:", url);
 

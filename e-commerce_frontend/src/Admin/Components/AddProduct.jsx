@@ -54,7 +54,7 @@ export default function CreateProductPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8081/admin/products", {
+      await axios.post("https://e-commerce-app-9vum.onrender.com/admin/products", {
         ...product,
         price: Number(product.price),
         discountedPrice: Number(product.discountedPrice),

@@ -33,7 +33,7 @@ export default function AdminOrdersPage() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8081/order/getAllOrder");
+      const res = await axios.get("https://e-commerce-app-9vum.onrender.com//order/getAllOrder");
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders:", err);
@@ -55,7 +55,7 @@ export default function AdminOrdersPage() {
 
     try {
       await axios.patch(
-        `http://localhost:8081/order/updateOrder/${orderId}/${newStatus}`
+        `https://e-commerce-app-9vum.onrender.com//order/updateOrder/${orderId}/${newStatus}`
       );
       alert("Order status updated!");
       fetchOrders();

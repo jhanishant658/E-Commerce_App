@@ -27,7 +27,7 @@ export default function OrderSummary({selectedAddress}) {
         const userId = user.id;
   
         try {
-          const res = await axios.get(`http://localhost:8081/usercart/${userId}`, {
+          const res = await axios.get(`https://e-commerce-app-9vum.onrender.com//usercart/${userId}`, {
             headers: {
               Authorization: `Bearer ${token}`, // ✅ Attach JWT here
             },

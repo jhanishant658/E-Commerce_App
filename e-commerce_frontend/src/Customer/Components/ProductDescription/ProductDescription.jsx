@@ -21,7 +21,7 @@ const ProductDescription = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:8081/products/${id}`);
+        const res = await axios.get(`https://e-commerce-app-9vum.onrender.com//products/${id}`);
         setProduct(res.data);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -46,7 +46,7 @@ const ProductDescription = () => {
         quantity: 1,
       };
 
-      await axios.post(`http://localhost:8081/cartitem/${userId}`, payload);
+      await axios.post(`https://e-commerce-app-9vum.onrender.com//cartitem/${userId}`, payload);
       toast.success("Item added to cart!");
     } catch (error) {
       console.error("Error adding to cart:", error);

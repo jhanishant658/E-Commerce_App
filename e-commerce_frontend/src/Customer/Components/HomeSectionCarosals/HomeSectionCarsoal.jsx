@@ -21,7 +21,7 @@ export default function HomeSectionCarousel({ sectionId }) {
 
       try {
         const res = await axios.get(
-          `http://localhost:8081/products/category/${sectionId}`, 
+          `https://e-commerce-app-9vum.onrender.com//products/category/${sectionId}`, 
           {
             headers: {
               Authorization: `Bearer ${token}`,

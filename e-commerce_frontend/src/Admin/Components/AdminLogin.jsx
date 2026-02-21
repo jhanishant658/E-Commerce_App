@@ -27,7 +27,7 @@ const AdminLogin = () => {
     setError('')
 
     try {
-      const res = await axios.post('http://localhost:8081/auth/signin', {
+      const res = await axios.post('https://e-commerce-app-9vum.onrender.com//auth/signin', {
         email,
         password,
       })
