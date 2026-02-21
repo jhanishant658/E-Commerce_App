@@ -8,4 +8,4 @@ RUN ./mvnw package -DskipTests
 
 EXPOSE 8080
 
-CMD ["java","-jar","target/*.jar"]
+CMD java -jar target/E-Commerce-0.0.1-SNAPSHOT.jar
