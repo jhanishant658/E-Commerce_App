@@ -36,7 +36,10 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+       config.setAllowedOrigins(Arrays.asList(
+        "http://localhost:3000",
+        "https://e-commerce-app-blue-ten.vercel.app"
+    ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
         config.setAllowedHeaders(Arrays.asList("*"));
