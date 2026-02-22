@@ -22,9 +22,9 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
           <ul className="space-y-2">
             <li><Link to="/" className="hover:text-white">Home</Link></li>
-            <li><Link to="/shop" className="hover:text-white">Shop</Link></li>
+            <li><Link to="/stores" className="hover:text-white">Shop</Link></li>
             <li><Link to="/about" className="hover:text-white">About Us</Link></li>
-            <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+            <li><Link to="#" className="hover:text-white">Contact</Link></li>
           </ul>
         </div>
 
@@ -32,10 +32,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Customer Service</h3>
           <ul className="space-y-2">
-            <li><Link to="/faq" className="hover:text-white">FAQ</Link></li>
-            <li><Link to="/returns" className="hover:text-white">Returns</Link></li>
-            <li><Link to="/shipping" className="hover:text-white">Shipping Info</Link></li>
-            <li><Link to="/support" className="hover:text-white">Support</Link></li>
+            <li><Link to="#" className="hover:text-white">FAQ</Link></li>
+            <li><Link to="#" className="hover:text-white">Returns</Link></li>
+            <li><Link to="#" className="hover:text-white">Shipping Info</Link></li>
+            <li><Link to="#" className="hover:text-white">Support</Link></li>
           </ul>
         </div>
 
@@ -43,10 +43,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Follow Us</h3>
           <div className="flex space-x-4 text-xl">
-            <Link to="#" className="hover:text-blue-500"><FacebookIcon /></Link>
-            <Link to="#" className="hover:text-pink-500"><InstagramIcon /></Link>
+            <Link to="https://www.instagram.com/nishant_jha__18/" className="hover:text-blue-500"><FacebookIcon /></Link>
+            <Link to="https://www.instagram.com/nishant_jha__18/" className="hover:text-pink-500"><InstagramIcon /></Link>
             <Link to="#" className="hover:text-sky-500"><TwitterIcon /></Link>
-            <Link to="#" className="hover:text-blue-400"><LinkedInIcon /></Link>
+            <Link to="https://www.linkedin.com/in/nishant-jha-0b96a629b/" className="hover:text-blue-400"><LinkedInIcon /></Link>
           </div>
         </div>
 

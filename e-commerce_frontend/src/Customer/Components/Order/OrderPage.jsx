@@ -50,9 +50,12 @@ export default function OrdersPage() {
             products: products,
           };
         });
+const sortedOrders = [...fetchedOrders].sort(
+  (a, b) => new Date(b.date) - new Date(a.date)
+);
 
-        setOrders(fetchedOrders);
-        setSelectedOrder(fetchedOrders[0]);
+setOrders(sortedOrders);
+setSelectedOrder(sortedOrders[0]);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
       }

@@ -29,16 +29,23 @@ export default function SignUp() {
     }
 
     try {
-      await axios.post("https://e-commerce-app-9vum.onrender.com/auth/signup", {
+     const res =  await axios.post("https://e-commerce-app-9vum.onrender.com/auth/signup", {
         firstname: formData.firstname,
         lastname: formData.lastname,
         email: formData.email,
         mobile: formData.mobile,
         password: formData.password,
+        role : "Customer"
       });
 
+      // create cart for the new user 
+      await axios.post("https://e-commerce-app-9vum.onrender.com/cart", 
+        
+     res.data.user
+  
+      );
       toast.success("Signup successful! Redirecting to login...");
-
+      
       setTimeout(() => navigate("/signin"), 2000); // 2s delay
     } catch (err) {
       toast.error(err.response?.data?.message || "Signup failed. Try again.");
