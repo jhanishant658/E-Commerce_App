@@ -22,15 +22,15 @@ const HomePage = () => {
       while ( !isReady && attempts < 5) {
         try {
 
-          const res = await fetch("https://e-commerce-app-9vum.onrender.com/runApp")
+         const res = await fetch("https://e-commerce-app-9vum.onrender.com/health")
+const text = await res.text()
 
-          if (res.ok) {
-            isReady = true;
-            setBackendReady(true) ;
-            // this will help you to not show loading screen again and again if user refreshes or comes back to homepage within same session
-        sessionStorage.setItem("backendAwake", "true") // 🔐 mark awake
-            break;
-          }
+          if (res.status === 200 && text === "READY") {
+              isReady = true;
+               setBackendReady(true);
+               sessionStorage.setItem("backendAwake", "true")
+               break;
+}
 
         } catch (err) {
           console.log("Backend waking up...")
