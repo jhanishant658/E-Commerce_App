@@ -54,7 +54,6 @@ export default function DeliveryAddressForm() {
   const handleDeliverHere = (address) => {
     // Save selected address in localStorage ONLY on Deliver Here
     localStorage.setItem("selectedAddress", JSON.stringify(address));
-    console.log("Selected Address:", address);
     navigate("/checkout?step=2", { state: { selectedAddress: address } });
   };
 

@@ -22,8 +22,6 @@ export default function OrderSummary({selectedAddress}) {
           return;
         }
   
-        console.log("User:", user);
-  
         const userId = user.id;
   
         try {

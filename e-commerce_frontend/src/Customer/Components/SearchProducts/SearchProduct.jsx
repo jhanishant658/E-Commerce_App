@@ -16,7 +16,6 @@ export default function SearchProduct({ params }) {
 
         const url = `https://e-commerce-app-9vum.onrender.com/product/search/${searchTerm}`;
 
-        console.log("Fetching:", url);
 
         const res = await axios.get(url);
 

@@ -27,7 +27,7 @@ export default function ProductList({ params, filters }) {
 
         const url = `https://e-commerce-app-9vum.onrender.com/products/filter?level1=${params.level1}&level2=${params.level2 || ''}&level3=${params.level3 || ''}&colors=${filters.colors.join(',')}&minPrice=${minPrice}&maxPrice=${maxPrice}&minDiscount=${filters.discountRange?.min || ''}&maxDiscount=${filters.discountRange?.max || ''}&sortBy=${filters.sortBy || ''}`;
 
-        console.log("Fetching:", url);
+        
 
         const res = await axios.get(url, {
           headers: { Authorization: `Bearer ${token}` },

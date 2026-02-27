@@ -158,9 +158,7 @@ export default function Navigation() {
   // Dummy login state (replace with actual auth logic)
   const user = JSON.parse(localStorage.getItem("User")) // Example: { firstName: "Nishant" }
   const firstLetter = user?.firstname?.charAt(0).toUpperCase()
-  console.log(firstLetter);
-  console.log(user);
-  console.log(user?.firstname);
+
 
   const handleSearchKey = (e) => {
     if (e.key === "Enter") {

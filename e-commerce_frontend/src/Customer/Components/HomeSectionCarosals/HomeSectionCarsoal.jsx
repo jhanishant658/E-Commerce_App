@@ -29,7 +29,6 @@ export default function HomeSectionCarousel({ sectionId }) {
           }
         );
 
-        console.log("Fetched Products:", res.data); // 👀 check response in console
         setProducts(res.data);
       } catch (err) {
         console.error("Error fetching products:", err.response?.data || err.message);

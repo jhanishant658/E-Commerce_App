@@ -63,20 +63,19 @@ const [activeStep, setActiveStep] = useState(stepFromUrl);
         description: "Order Payment",
         order_id: orderId,
         handler: async function (response) {
-          console.log("✅ Payment Success:", response);
+         
 
           try {
            const user = JSON.parse(localStorage.getItem("User"));
             const userId = user?.id;
             const savedAddress = JSON.parse(localStorage.getItem("selectedAddress"));
-console.log(savedAddress);
+           
             // ✅ Place Order After Payment
             const res = await axios.post(
               `https://e-commerce-app-9vum.onrender.com/order/${userId}`,
               savedAddress
             );
-
-            console.log("✅ Order Placed:", res.data);
+            
             alert("Payment Successful! Your Order is Placed.");
             navigate("/order");
           } catch (err) {

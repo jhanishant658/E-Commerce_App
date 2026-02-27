@@ -9,7 +9,7 @@ export default function OrderDetails() {
 useEffect(() => {
   const fetchAddress = async () => {
      const savedAddress = JSON.parse(localStorage.getItem("selectedAddress"));
-  console.log("Saved Address:", savedAddress);
+  
   setSelectedAddress(savedAddress);
   };
 
@@ -19,7 +19,6 @@ useEffect(() => {
 
 // Ye run hoga jab selectedAddress update hoga
 useEffect(() => {
-  console.log("Updated SelectedAddress:", selectedAddress);
 }, [selectedAddress]);
 
 
